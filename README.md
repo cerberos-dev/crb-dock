@@ -1,2 +1,2 @@
 # You Are Digital Docker (yadock)
-Our own Docker setup
+Our own Docker setup.
