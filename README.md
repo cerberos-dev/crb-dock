@@ -1,4 +1,4 @@
-# You Are Digital Docker (yadock)
+# You Are Docker (yadock)
 Our own Docker setup.
 
 # Installation guide
