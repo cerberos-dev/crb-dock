@@ -125,6 +125,8 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
     # Load the xdebug extension only with phpunit commands
     apt-get -y update && apt-get install -y --force-yes php7.1-xdebug \
 ;fi
+# ADD for REMOTE debugging
+COPY ./xdebug.ini /etc/php/7.1/cli/conf.d/xdebug.ini
 
 #####################################
 # ssh:
