@@ -7,7 +7,7 @@ services:
     applications:
       image: tianon/true
       volumes:
-        - ${APPLICATION}:/var/www:cached
+        - ${APPLICATION}:${APPLICATION_LOCATION}
 
 ### Workspace Utilities Container ###########################
 
