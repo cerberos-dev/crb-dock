@@ -2,6 +2,11 @@
 # General Setup
 ############################
 
+### Application location Path
+# Point to your `/var/www` location.
+# Add :cached after www to fix OSX performance issues
+APPLICATION_LOCATION=/var/www
+
 ### Application Path
 # Point to your application code, will be available at `/var/www`.
 
