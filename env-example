@@ -19,7 +19,7 @@ DATA_SAVE_PATH=~/.data
 
 ### PHP version
 # Applies to the Workspace and PHP-FPM containers
-# Accepted values: 71
+# Accepted values: 71, 56
 
 PHP_VERSION=71
 
