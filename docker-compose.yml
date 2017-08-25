@@ -160,6 +160,7 @@ services:
         - cluster.name=yadock-cluster
         - bootstrap.memory_lock=true
         - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+        - xpack.security.enabled=false
       ulimits:
         memlock:
           soft: -1
