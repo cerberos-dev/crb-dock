@@ -91,6 +91,11 @@ MYSQL_PASSWORD=secret
 MYSQL_PORT=3306
 MYSQL_ROOT_PASSWORD=root
 
+### ELASTICSEARCH ######################################################################
+
+ELASTICSEARCH_HOST_HTTP_PORT=9200
+ELASTICSEARCH_HOST_TRANSPORT_PORT=9300
+
 ############################
 # Miscellaneous
 ############################
