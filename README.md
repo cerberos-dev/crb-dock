@@ -23,3 +23,32 @@ Our own Docker setup.
 # Notes
 ## docker-compose up
 There is no need to up the workspace or the php container because they are linked to the webserver and database containers.
+
+## DNS and YADOCK
+Make resolving hosts easier by using DNSMASQ (works on OSX / Linux) we're going to give an description regarding the OSX install
+
+## Install
+`brew install dnsmasq`
+
+## Setup
+Create config directory
+`mkdir -pv $(brew --prefix)/etc/`
+
+Setup `*.dev (or what other else you want.)`
+`echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf`
+
+## Autostart
+
+## Work after reboot
+`sudo cp -v $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons`
+
+## Get it going right now
+`sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist`
+
+## Add to resolvers
+
+## Create resolver directory
+`sudo mkdir -v /etc/resolver`
+
+## Add your nameserver to resolvers
+`sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/dev'`
