@@ -263,65 +263,9 @@ USER root
 RUN echo "" >> ~/.bashrc && \
     echo 'alias art="php artisan"' >> ~/.bashrc
 
-#####################################
-# Laravel Envoy:
-#####################################
-USER yadock
-
-ARG INSTALL_LARAVEL_ENVOY=false
-ENV INSTALL_LARAVEL_ENVOY ${INSTALL_LARAVEL_ENVOY}
-
-RUN if [ ${INSTALL_LARAVEL_ENVOY} = true ]; then \
-    # Install the Laravel Envoy
-    composer global require "laravel/envoy=~1.0" \
-;fi
-
-#####################################
-# Laravel Installer:
-#####################################
-USER root
-
-ARG INSTALL_LARAVEL_INSTALLER=false
-ENV INSTALL_LARAVEL_INSTALLER ${INSTALL_LARAVEL_INSTALLER}
-
-RUN if [ ${INSTALL_LARAVEL_INSTALLER} = true ]; then \
-    # Install the Laravel Installer
-	echo "" >> ~/.bashrc && \
-	echo 'export PATH="~/.composer/vendor/bin:$PATH"' >> ~/.bashrc \
-	&& composer global require "laravel/installer" \
-;fi
-
-USER yadock
-
-#####################################
-# Symfony:
-#####################################
-USER root
-ARG INSTALL_SYMFONY=false
-ENV INSTALL_SYMFONY ${INSTALL_SYMFONY}
-RUN if [ ${INSTALL_SYMFONY} = true ]; then \
-
-  mkdir -p /usr/local/bin \
-  && curl -LsS https://symfony.com/installer -o /usr/local/bin/symfony \
-  && chmod a+x /usr/local/bin/symfony \
-
-  #  Symfony 3 alias
-  && echo 'alias dev="php bin/console -e=dev"' >> ~/.bashrc \
-  && echo 'alias prod="php bin/console -e=prod"' >> ~/.bashrc \
-
-  #  Symfony 2 alias
-  #  && echo 'alias dev="php app/console -e=dev"' >> ~/.bashrc \
-  #  && echo 'alias prod="php app/console -e=prod"' >> ~/.bashrc \
-
-;fi
-
-USER yadock
-
-#
-#--------------------------------------------------------------------------
+######################################
 # Final Touch
-#--------------------------------------------------------------------------
-#
+######################################
 
 # Clean up
 USER root
