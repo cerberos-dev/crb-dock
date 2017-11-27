@@ -91,6 +91,15 @@ MYSQL_PASSWORD=secret
 MYSQL_PORT=3306
 MYSQL_ROOT_PASSWORD=root
 
+### MARIADB ######################################################################
+
+MARIADB_DATABASE=default
+MARIADB_USER=default
+MARIADB_PASSWORD=secret
+MARIADB_PORT=3306
+MARIADB_ROOT_PASSWORD=root
+MARIADB_ENTRYPOINT_INITDB=./mariadb/docker-entrypoint-initdb.d
+
 ### ELASTICSEARCH ######################################################################
 
 ELASTICSEARCH_HOST_HTTP_PORT=9200
