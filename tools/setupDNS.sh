@@ -16,7 +16,7 @@ if [ "$(uname)" == "Darwin" ]; then
     fi
 
 
-    echo 'address=/.dev/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
+    echo 'address=/.yad/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
 
     sudo cp -v $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
     sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
