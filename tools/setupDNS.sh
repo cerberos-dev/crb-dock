@@ -22,5 +22,5 @@ if [ "$(uname)" == "Darwin" ]; then
     sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 
     sudo mkdir -v /etc/resolver
-    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/dev'
+    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/yad'
 fi
