@@ -67,6 +67,7 @@ services:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
       expose:
         - "9000"
+        - "9001"
       depends_on:
         - workspace
       extra_hosts:
