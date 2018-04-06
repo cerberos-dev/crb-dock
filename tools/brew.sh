@@ -2,7 +2,8 @@
 
 if test ! $(which brew); then
     echo "Installing homebrew"
-    ruby "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"gs should pass through the the `brew list check`
+
+    ruby "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 echo -e "\n\nInstalling homebrew packages..."
