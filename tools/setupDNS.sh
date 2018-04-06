@@ -10,6 +10,7 @@ if [ "$(uname)" == "Darwin" ]; then
     if brew ls --versions dnsmasq; then
       # The package is installed we do nothing
       echo "\n\nYes DNSMASQ installed."
+
       # Stop DNSMASQ service to make sure we can continue with the steps below
       sudo launchctl stop homebrew.mxcl.dnsmasq
     else
@@ -24,6 +25,7 @@ if [ "$(uname)" == "Darwin" ]; then
 
     sudo mkdir -v /etc/resolver
     sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/yad'
+
     # Make sure DNSMASQ is started
     sudo launchctl start homebrew.mxcl.dnsmasq
 fi
