@@ -28,13 +28,17 @@ alias tree="xtree"
 
 # Laravel / PHP Alisases
 alias art="php artisan"
-alias artisan="php artisan"
 alias cdump="composer dump-autoload -o"
 alias composer:dump="composer dump-autoload -o"
 alias db:reset="php artisan migrate:reset && php artisan migrate --seed"
 alias migrate="php artisan migrate"
 alias seed="php artisan:seed"
 alias phpunit="./vendor/bin/phpunit"
+alias artg="php artisan list | grep"
+alias artr="php artisan route:list"
+alias artrg="php artisan route:list | grep"
+alias artmr="php artisan migrate:refresh"
+alias artmrs="php artisan migrate:refresh --seed"
 
 
 # requires installation of 'https://www.npmjs.com/package/npms-cli'
