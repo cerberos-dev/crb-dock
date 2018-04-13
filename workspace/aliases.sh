@@ -40,7 +40,6 @@ alias artrg="php artisan route:list | grep"
 alias artmr="php artisan migrate:refresh"
 alias artmrs="php artisan migrate:refresh --seed"
 
-
 # requires installation of 'https://www.npmjs.com/package/npms-cli'
 alias npms="npms search"
 
