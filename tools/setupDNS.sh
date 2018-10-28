@@ -18,13 +18,13 @@ if [ "$(uname)" == "Darwin" ]; then
         source brew.sh
     fi
 
-    echo 'address=/.yad/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
+    echo 'address=/.sprd/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
 
     sudo cp -v $(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist /Library/LaunchDaemons
     sudo launchctl load -w /Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist
 
     sudo mkdir -v /etc/resolver
-    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/yad'
+    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/sprd'
 
     # Make sure DNSMASQ is started
     sudo launchctl start homebrew.mxcl.dnsmasq
