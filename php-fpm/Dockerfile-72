@@ -9,7 +9,7 @@
 # Note: Base Image name format {image-tag}-{php-version}
 #
 
-FROM marzun/phpfpm71
+FROM marzun/phpfpm72
 
 MAINTAINER Marius van Zundert <marius.vanzundert@youaredigital.nl>
 
@@ -92,7 +92,7 @@ RUN if [ ${INSTALL_SWOOLE} = true ]; then \
 ARG INSTALL_ZIP_ARCHIVE=false
 RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
     # Install the zip extension
-    docker-php-ext-install zip \
+ docker-php-ext-install zip \
 ;fi
 
 #####################################
