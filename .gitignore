@@ -1,5 +1,47 @@
+# IDE files and folders
+nbproject/
+.~lock.*
+.buildpath
 .idea
+.project
+.settings
+*.sublime-project
+*.sublime-workspace
+
+# Other files
+.env
+*.log
+*.sqlite
+*.sql
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+
+# Other Folders
 /logs
 /data
-.env
-/.project
+
+# Compiled source
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
