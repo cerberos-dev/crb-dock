@@ -1,6 +1,6 @@
 FROM webdevops/apache:ubuntu-16.04
 
-MAINTAINER Eric Pfeiffer <computerfr33k@users.noreply.github.com>
+MAINTAINER Spring Digital <development@springdigital.nl>
 
 ARG PHP_SOCKET=php-fpm:9000
 

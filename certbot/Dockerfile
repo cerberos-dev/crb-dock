@@ -1,6 +1,6 @@
 FROM phusion/baseimage:latest
 
-MAINTAINER Mahmoud Zalt <mahmoud@zalt.me>
+MAINTAINER Spring Digital <development@springdigital.nl>
 
 COPY run-certbot.sh /root/certbot/run-certbot.sh
 

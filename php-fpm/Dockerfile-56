@@ -14,7 +14,7 @@
 
 FROM marzun/phpfpm56
 
-MAINTAINER Marius van Zundert <marius.vanzundert@gmail.com>
+MAINTAINER Spring Digital <development@springdigital.nl>
 
 #
 #--------------------------------------------------------------------------

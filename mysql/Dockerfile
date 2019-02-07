@@ -1,10 +1,6 @@
 FROM mysql:5.7
 
-MAINTAINER Marius van Zundert <marius.vanzundert@youaredigital.nl>
-
-#####################################
-# Set Timezone
-#####################################
+MAINTAINER Spring Digital <development@springdigital.nl>
 
 ARG TZ=UTC
 ENV TZ ${TZ}
