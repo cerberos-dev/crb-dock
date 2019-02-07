@@ -34,7 +34,7 @@ xdebug_start ()
     # If running on Windows, need to prepend with winpty :(
     if [[ $OS_TYPE == "MINGW" ]]; then
         winpty docker exec -it $PHP_FPM_CONTAINER bash -c "${ON_CMD}"
-        docker restart $PHP_FPM_CONTAINER
+        winpty docker restart $PHP_FPM_CONTAINER
         winpty docker exec -it $PHP_FPM_CONTAINER bash -c 'php -v'
 
     else
