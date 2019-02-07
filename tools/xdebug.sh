@@ -2,10 +2,8 @@
 
 # NOTE: At the moment, this has only been confirmed to work with PHP 7
 
-
 # Grab full name of php-fpm container
 PHP_FPM_CONTAINER=$(docker ps | grep php-fpm | awk '{print $1}')
-
 
 # Grab OS type
 if [[ "$(uname)" == "Darwin" ]]; then
@@ -14,7 +12,6 @@ else
     OS_TYPE=$(expr substr $(uname -s) 1 5)
 fi
 
-
 xdebug_status ()
 {
     echo 'xDebug status'
@@ -22,22 +19,17 @@ xdebug_status ()
     # If running on Windows, need to prepend with winpty :(
     if [[ $OS_TYPE == "MINGW" ]]; then
         winpty docker exec -it $PHP_FPM_CONTAINER bash -c 'php -v'
-
     else
         docker exec -it $PHP_FPM_CONTAINER bash -c 'php -v'
     fi
-
 }
-
 
 xdebug_start ()
 {
     echo 'Start xDebug'
 
     # And uncomment line with xdebug extension, thus enabling it
-    ON_CMD="sed -i 's/^;zend_extension=/zend_extension=/g' \
-                    /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
-
+    ON_CMD="sed -i 's/^;zend_extension=/zend_extension=/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 
     # If running on Windows, need to prepend with winpty :(
     if [[ $OS_TYPE == "MINGW" ]]; then
@@ -52,7 +44,6 @@ xdebug_start ()
     fi
 }
 
-
 xdebug_stop ()
 {
     echo 'Stop xDebug'
@@ -60,25 +51,19 @@ xdebug_stop ()
     # Comment out xdebug extension line
     OFF_CMD="sed -i 's/^zend_extension=/;zend_extension=/g' /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini"
 
-
     # If running on Windows, need to prepend with winpty :(
     if [[ $OS_TYPE == "MINGW" ]]; then
-        # This is the equivalent of:
-        # winpty docker exec -it laradock_php-fpm_1 bash -c 'bla bla bla'
+        # This is the equivalent of: winpty docker exec -it laradock_php-fpm_1 bash -c 'bla bla bla'
         # Thanks to @michaelarnauts at https://github.com/docker/compose/issues/593
         winpty docker exec -it $PHP_FPM_CONTAINER bash -c "${OFF_CMD}"
-        docker restart $PHP_FPM_CONTAINER
-        #docker-compose restart php-fpm
+        winpty docker restart $PHP_FPM_CONTAINER
         winpty docker exec -it $PHP_FPM_CONTAINER bash -c 'php -v'
-
     else
         docker exec -it $PHP_FPM_CONTAINER bash -c "${OFF_CMD}"
-        # docker-compose restart php-fpm
         docker restart $PHP_FPM_CONTAINER
         docker exec -it $PHP_FPM_CONTAINER bash -c 'php -v'
     fi
 }
-
 
 case $@ in
     stop|STOP)
@@ -95,7 +80,6 @@ case $@ in
         echo "xDebug must have already been installed."
         echo "Usage:"
         echo "  .php-fpm/xdebug stop|start|status"
-
 esac
 
 exit 1
