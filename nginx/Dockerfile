@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-MAINTAINER Marius van Zundert <marius.vanzundert@youaredigital.nl>
+MAINTAINER Spring Digital <development@springdigital.nl>
 
 ADD nginx.conf /etc/nginx/
 

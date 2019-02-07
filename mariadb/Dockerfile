@@ -1,6 +1,6 @@
 FROM mariadb:latest
 
-MAINTAINER Marius van Zundert <marius.vanzundert@youaredigital.nl>
+MAINTAINER Spring Digital <development@springdigital.nl>
 
 ADD my.cnf /etc/mysql/conf.d/my.cnf
 
