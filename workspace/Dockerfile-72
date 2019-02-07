@@ -8,7 +8,7 @@
 
 FROM marzun/basedock:latest
 
-MAINTAINER Marius van Zundert <marius.vanzundert@youaredigital.nl>
+MAINTAINER Spring Digital <development@springdigital.nl>
 
 #
 #--------------------------------------------------------------------------

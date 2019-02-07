@@ -11,7 +11,7 @@
 
 FROM marzun/phpfpm71
 
-MAINTAINER Marius van Zundert <marius.vanzundert@youaredigital.nl>
+MAINTAINER Spring Digital <development@springdigital.nl>
 
 #
 #--------------------------------------------------------------------------
