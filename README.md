@@ -22,14 +22,14 @@ Our own Docker setup.
 5. Start the Apache2 container to sync `.conf` files: `docker-compose up -d apache2`.
 
 ## Switching PHP-FPM versions
-1. Make sure all containers are down (`$ docker ps` should give no results).
+1. Make sure all containers are down (`docker ps` should give no results).
 2. Change your `.env` file to the desired version (currently supporting 5.6, 7.1 and 7.2. See example file for more info).
 3. Rebuild the php-fpm container: `docker-compose build php-fpm`.
 4. Now you can use `SprDock` as usual with the desired PHP version.
 
 ## Using IonCube Loader
 <sup>IonCube Loader is used to decode protected PHP code. [Read more on the ioncube loader website](https://www.ioncube.com/loaders.php).</sup>
-1. Make sure all containers are down (`$ docker ps` should give no results)
+1. Make sure all containers are down (`docker ps` should give no results)
 2. Change the `PHP_FPM_INSTALL_IONCUBE` setting to true
 3. Rebuild the php-fpm container (`$ docker-compose build php-fpm` on commandline)
 4. When the build is complete you can bring the containers up again like usual
