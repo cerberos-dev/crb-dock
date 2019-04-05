@@ -3,7 +3,7 @@
 if test ! $(which brew); then
     echo "Installing homebrew"
 
-    ruby "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+    ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 fi
 
 echo -e "\n\nInstalling homebrew packages..."
