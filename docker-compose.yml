@@ -203,8 +203,8 @@ services:
   smtp:
     build: ./mail
     ports:
-      - "1025:1025"
-      - "1080:1080"
+      - "${SMTP_INCOMING_PORT}:1025"
+      - "${SMTP_WEBCLIENT_PORT}:1080"
     networks:
       - frontend
       - backend
