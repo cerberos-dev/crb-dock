@@ -202,11 +202,11 @@ services:
 
 ### Smtp ######################################################
 
-  smtp:
-    build: ./mail
+  mailcatcher:
+    build: ./mailcatcher
     ports:
-      - "${SMTP_INCOMING_PORT}:1025"
-      - "${SMTP_WEBCLIENT_PORT}:1080"
+      - "${MAILCATCHER_INCOMING_PORT}:1025"
+      - "${MAILCATCHER_WEBCLIENT_PORT}:1080"
     networks:
       - frontend
       - backend
