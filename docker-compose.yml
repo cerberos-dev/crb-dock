@@ -93,7 +93,7 @@ services:
       - "${NGINX_HOST_HTTPS_PORT}:443"
     depends_on:
       - php-fpm
-      - smtp
+      - mailcatcher
     networks:
       - frontend
       - backend
@@ -115,7 +115,7 @@ services:
       - "${APACHE2_HOST_HTTPS_PORT}:443"
     depends_on:
       - php-fpm
-      - smtp
+      - mailcatcher
     networks:
       - frontend
       - backend
@@ -198,7 +198,7 @@ services:
       - frontend
       - backend
 
-### Smtp ######################################################
+### Mailcatcher ###############################################
 
   mailcatcher:
     build: ./mailcatcher
