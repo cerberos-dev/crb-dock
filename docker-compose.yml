@@ -93,6 +93,7 @@ services:
       - "${NGINX_HOST_HTTPS_PORT}:443"
     depends_on:
       - php-fpm
+      - smtp
     networks:
       - frontend
       - backend
@@ -114,6 +115,7 @@ services:
       - "${APACHE2_HOST_HTTPS_PORT}:443"
     depends_on:
       - php-fpm
+      - smtp
     networks:
       - frontend
       - backend
@@ -196,6 +198,17 @@ services:
       - frontend
       - backend
 
+### Smtp ######################################################
+
+  smtp:
+    build: ./mail
+    ports:
+      - "${SMTP_INCOMING_PORT}:1025"
+      - "${SMTP_WEBCLIENT_PORT}:1080"
+    networks:
+      - frontend
+      - backend
+
 ### Networks Setup ############################################
 
 networks:
@@ -215,3 +228,7 @@ volumes:
     driver: "local"
   elasticsearch-plugins:
     driver: "local"
+  maildata:
+    driver: local
+  mailstate:
+    driver: local
