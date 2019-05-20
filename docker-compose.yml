@@ -180,6 +180,7 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
       - elasticsearch-plugins:/usr/share/elasticsearch/plugins
+      - ./elasticsearch/config:/usr/share/elasticsearch/config
     environment:
       - cluster.name=yadock-cluster
       - bootstrap.memory_lock=true
@@ -222,13 +223,15 @@ networks:
 
 volumes:
   mysql:
-    driver: "local"
+    driver: local
   mariadb:
-    driver: "local"
+    driver: local
   elasticsearch-data:
-    driver: "local"
+    driver: local
   elasticsearch-plugins:
-    driver: "local"
+    driver: local
+  elasticsearch-config:
+    driver: local
   maildata:
     driver: local
   mailstate:
