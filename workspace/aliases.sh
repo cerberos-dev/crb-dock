@@ -12,9 +12,19 @@ COL_CYAN=$ESC_SEQ"36;01m"
 
 # Commonly Used Aliases
 alias ..="cd .."
+alias ...="cd ../.."
+alias ....="cd ../../.."
+alias .....="cd ../../../.."
+alias ~="cd ~" # `cd` is probably faster to type though
+alias -- -="cd -"
+alias home="cd ~"
+
+alias h="history"
+alias j="jobs"
+alias e='exit'
 alias c="clear"
-alias cla="clear && ls -l"
-alias cll="clear && ls -la"
+alias cla="clear && ls -la"
+alias cll="clear && ls -l"
 alias cls="clear && ls"
 alias code="cd /var/www"
 alias ea="vi ~/aliases"

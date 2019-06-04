@@ -41,8 +41,8 @@ ARG PGID=1000
 ENV PUID ${PUID}
 ENV PGID ${PGID}
 
-RUN groupadd -g ${PGID} yadock && \
-    useradd -u ${PUID} -g yadock -m yadock && \
+RUN groupadd -g ${PGID} sprdock && \
+    useradd -u ${PUID} -g sprdock -m sprdock && \
     apt-get update -yqq
 
 #####################################
@@ -73,11 +73,11 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 #####################################
 
 # Add the composer.json
-COPY ./composer.json /home/yadock/.composer/composer.json
+COPY ./composer.json /home/sprdock/.composer/composer.json
 
-# Make sure that ~/.composer belongs to yadock
-RUN chown -R yadock:yadock /home/yadock/.composer
-USER yadock
+# Make sure that ~/.composer belongs to sprdock
+RUN chown -R sprdock:sprdock /home/sprdock/.composer
+USER sprdock
 
 # Check if global install need to be run
 ARG COMPOSER_GLOBAL_INSTALL=false
@@ -99,22 +99,22 @@ RUN chmod -R 644 /etc/cron.d
 # User Aliases
 #####################################
 
-USER yadock
-COPY ./aliases.sh /home/yadock/aliases.sh
+USER sprdock
+COPY ./aliases.sh /home/sprdock/aliases.sh
 RUN echo "" >> ~/.bashrc && \
     echo "# Load Custom Aliases" >> ~/.bashrc && \
-    echo "source /home/yadock/aliases.sh" >> ~/.bashrc && \
+    echo "source /home/sprdock/aliases.sh" >> ~/.bashrc && \
 	echo "" >> ~/.bashrc && \
-	sed -i 's/\r//' /home/yadock/aliases.sh && \
-	sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/yadock/aliases.sh
+	sed -i 's/\r//' /home/sprdock/aliases.sh && \
+	sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/sprdock/aliases.sh
 
 USER root
 RUN echo "" >> ~/.bashrc && \
     echo "# Load Custom Aliases" >> ~/.bashrc && \
-    echo "source /home/yadock/aliases.sh" >> ~/.bashrc && \
+    echo "source /home/sprdock/aliases.sh" >> ~/.bashrc && \
 	echo "" >> ~/.bashrc && \
-	sed -i 's/\r//' /home/yadock/aliases.sh && \
-	sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/yadock/aliases.sh
+	sed -i 's/\r//' /home/sprdock/aliases.sh && \
+	sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/sprdock/aliases.sh
 
 #####################################
 # xDebug:
@@ -175,7 +175,7 @@ RUN if [ ${INSTALL_DRUSH} = true ]; then \
     drush core-status \
 ;fi
 
-USER yadock
+USER sprdock
 
 #####################################
 # Node / NVM:
@@ -186,7 +186,7 @@ ARG NODE_VERSION=stable
 ENV NODE_VERSION ${NODE_VERSION}
 ARG INSTALL_NODE=false
 ENV INSTALL_NODE ${INSTALL_NODE}
-ENV NVM_DIR /home/yadock/.nvm
+ENV NVM_DIR /home/sprdock/.nvm
 RUN if [ ${INSTALL_NODE} = true ]; then \
     # Install nvm (A Node Version Manager)
     curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.1/install.sh | bash && \
@@ -210,7 +210,7 @@ USER root
 
 RUN if [ ${INSTALL_NODE} = true ]; then \
     echo "" >> ~/.bashrc && \
-    echo 'export NVM_DIR="/home/yadock/.nvm"' >> ~/.bashrc && \
+    echo 'export NVM_DIR="/home/sprdock/.nvm"' >> ~/.bashrc && \
     echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
 ;fi
 
@@ -218,7 +218,7 @@ RUN if [ ${INSTALL_NODE} = true ]; then \
 # YARN:
 #####################################
 
-USER yadock
+USER sprdock
 
 ARG INSTALL_YARN=false
 ENV INSTALL_YARN ${INSTALL_YARN}
@@ -241,7 +241,7 @@ USER root
 
 RUN if [ ${INSTALL_YARN} = true ]; then \
     echo "" >> ~/.bashrc && \
-    echo 'export YARN_DIR="/home/yadock/.yarn"' >> ~/.bashrc && \
+    echo 'export YARN_DIR="/home/sprdock/.yarn"' >> ~/.bashrc && \
     echo 'export PATH="$YARN_DIR/bin:$PATH"' >> ~/.bashrc \
 ;fi
 
@@ -250,7 +250,7 @@ RUN if [ ${INSTALL_YARN} = true ]; then \
 #####################################
 
 # add ./vendor/bin to non-root user's bashrc (needed for phpunit)
-USER yadock
+USER sprdock
 
 RUN echo "" >> ~/.bashrc && \
     echo 'export PATH="/var/www/vendor/bin:$PATH"' >> ~/.bashrc

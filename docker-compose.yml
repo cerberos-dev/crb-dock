@@ -182,7 +182,7 @@ services:
       - elasticsearch-plugins:/usr/share/elasticsearch/plugins
       - ./elasticsearch/config:/usr/share/elasticsearch/config
     environment:
-      - cluster.name=yadock-cluster
+      - cluster.name=sprdock-cluster
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
       - xpack.security.enabled=false
