@@ -45,8 +45,3 @@ Thumbs.db
 *.rar
 *.tar
 *.zip
-
-# Personal files
-up
-down
-rebuild
