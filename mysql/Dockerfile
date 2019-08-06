@@ -1,6 +1,6 @@
 FROM mysql:5.7
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 ARG TZ=UTC
 ENV TZ ${TZ}
