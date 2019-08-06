@@ -1,8 +1,8 @@
-# Spring Digital Docker (SprDock)
+# Cerberos Docker (crb-dock)
 Our own Docker setup.
 
 ## Installation guide
-1. `git clone https://github.com/Spring-Digital/sprdock.git`.
+1. `git clone https://github.com/cerberos-dev/crb-dock.git`.
 2. Copy `.env.example` to `.env`.
 3. Edit `.env` to fit local environment.
 4. Start containers: `docker-compose up -d {nginx} {apache2} {mysql}`.
