@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 ADD nginx.conf /etc/nginx/
 

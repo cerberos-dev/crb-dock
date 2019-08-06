@@ -1,6 +1,6 @@
 FROM mariadb:latest
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 ADD my.cnf /etc/mysql/conf.d/my.cnf
 
