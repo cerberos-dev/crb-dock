@@ -11,7 +11,7 @@
 
 FROM marzun/phpfpm71
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 #
 #--------------------------------------------------------------------------
@@ -218,11 +218,9 @@ cd /tmp \
     && rm -f wkhtmltopdf.deb \
 ;fi
 
-#
-#--------------------------------------------------------------------------
+#####################################
 # Final Touch
-#--------------------------------------------------------------------------
-#
+#####################################
 
 ADD ./laravel.pool.conf /usr/local/etc/php-fpm.d/
 

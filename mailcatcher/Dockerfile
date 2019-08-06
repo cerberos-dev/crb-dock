@@ -1,5 +1,5 @@
 FROM schickling/mailcatcher:latest
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 EXPOSE 1025 1080

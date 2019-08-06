@@ -1,6 +1,6 @@
 FROM webdevops/apache:ubuntu-16.04
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 ARG PHP_SOCKET=php-fpm:9000
 

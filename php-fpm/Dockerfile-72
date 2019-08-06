@@ -11,7 +11,7 @@
 
 FROM marzun/phpfpm72
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 #
 #--------------------------------------------------------------------------

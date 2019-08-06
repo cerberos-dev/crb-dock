@@ -1,6 +1,6 @@
 FROM phusion/baseimage:latest
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 COPY run-certbot.sh /root/certbot/run-certbot.sh
 

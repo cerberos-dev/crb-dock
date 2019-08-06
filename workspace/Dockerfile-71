@@ -8,7 +8,7 @@
 
 FROM marzun/basedock:latest
 
-MAINTAINER Spring Digital <development@springdigital.nl>
+MAINTAINER Cerberos <development@cerberos.dev>
 
 #
 #--------------------------------------------------------------------------
