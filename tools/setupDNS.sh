@@ -16,6 +16,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
     # Add .yad and .sprd to the config
     echo 'address=/.yad/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
     echo 'address=/.sprd/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
+    echo 'address=/.crb/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
 
     if ! [[ -f '/Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist' ]]; then
         # Copy the daemon configuration file into place.
@@ -31,7 +32,11 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
     sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/yad'
     sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/sprd'
+    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/crb'
 
     # Make sure DNSMASQ is started
     sudo launchctl start homebrew.mxcl.dnsmasq
+
+    # Flush local DNS cache
+    sudo killall -HUP mDNSResponder
 fi
