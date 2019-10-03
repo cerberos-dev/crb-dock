@@ -216,13 +216,12 @@ cd /tmp \
     && curl -Lo wkhtmltopdf.deb https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb \
     && apt-get install -y ./wkhtmltopdf.deb \
     && rm -f wkhtmltopdf.deb \
+    && apt-get install -y xvfb \
 ;fi
 
-#
-#--------------------------------------------------------------------------
+#####################################
 # Final Touch
-#--------------------------------------------------------------------------
-#
+#####################################
 
 ADD ./laravel.pool.conf /usr/local/etc/php-fpm.d/
 
