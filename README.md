@@ -25,7 +25,7 @@ Our own Docker setup.
 1. Make sure all containers are down (`docker ps` should give no results).
 2. Change your `.env` file to the desired version (currently supporting 5.6, 7.1 and 7.2. See example file for more info).
 3. Rebuild the php-fpm container: `docker-compose build php-fpm`.
-4. Now you can use `SprDock` as usual with the desired PHP version.
+4. Now you can use `crbDock` as usual with the desired PHP version.
 
 ## Using IonCube Loader
 <sup>IonCube Loader is used to decode protected PHP code. [Read more on the ioncube loader website](https://www.ioncube.com/loaders.php).</sup>
@@ -48,7 +48,7 @@ Our own Docker setup.
 ## docker-compose up
 There is no need to up the `workspace` or the `php` container because they are linked to the webserver (NGINX / Apache2) and database containers.
 
-## DNS and SprDock
+## DNS and crbDock
 Make resolving hosts easier by using DNSMASQ (works on OSX / Linux) we're going to give an description regarding the OSX install
 
 Using a terminal client browse to: `/tools` and run: `./setupDNS.sh`

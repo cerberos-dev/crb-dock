@@ -1,5 +1,5 @@
 <VirtualHost *:80>
-  ServerName sample.sprd
+  ServerName sample.crb
   DocumentRoot /var/www/sample/
   Options Indexes FollowSymLinks
 
