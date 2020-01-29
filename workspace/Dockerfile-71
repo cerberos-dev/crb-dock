@@ -123,10 +123,10 @@ RUN echo "" >> ~/.bashrc && \
 ARG INSTALL_XDEBUG=false
 RUN if [ ${INSTALL_XDEBUG} = true ]; then \
     # Load the xdebug extension only with phpunit commands
-    apt-get -y update && apt-get install -y --force-yes php7.2-xdebug \
+    apt-get -y update && apt-get install -y --force-yes php7.1-xdebug \
 ;fi
 # ADD for REMOTE debugging
-COPY ./xdebug.ini /etc/php/7.2/cli/conf.d/xdebug.ini
+COPY ./xdebug.ini /etc/php/7.1/cli/conf.d/xdebug.ini
 
 #####################################
 # ssh:
@@ -158,7 +158,7 @@ RUN if [ ${INSTALL_MONGO} = true ]; then \
     # Install the mongodb extension
     pecl install mongodb && \
     echo "extension=mongodb.so" >> /etc/php/7.1/mods-available/mongodb.ini && \
-    ln -s /etc/php/7.2/mods-available/mongodb.ini /etc/php/7.2/cli/conf.d/30-mongodb.ini \
+    ln -s /etc/php/7.1/mods-available/mongodb.ini /etc/php/7.1/cli/conf.d/30-mongodb.ini \
 ;fi
 
 #####################################
