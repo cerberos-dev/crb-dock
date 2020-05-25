@@ -9,7 +9,7 @@
 # Note: Base Image name format {image-tag}-{php-version}
 #
 
-FROM marzun/phpfpm73
+FROM php:7.3-fpm
 
 MAINTAINER Cerberos <development@cerberos.dev>
 
@@ -23,6 +23,35 @@ MAINTAINER Cerberos <development@cerberos.dev>
 # to add more Software's or remove existing one, you need to edit the
 # base image (https://github.com/Mvzundert/base_phpfpm).
 #
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl \
+        libmemcached-dev \
+        libz-dev \
+        libpq-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libfreetype6-dev \
+        libssl-dev \
+        libmcrypt-dev \
+        libzip-dev
+
+# Install the PHP mcrypt extention
+RUN pecl install mcrypt-1.0.2
+
+# Install the PHP pdo_mysql extention
+RUN docker-php-ext-install mysqli \
+    && docker-php-ext-install pdo_mysql
+
+# Install the PHP pdo_pgsql extention
+RUN docker-php-ext-install pdo_pgsql
+
+#####################################
+# gd:
+#####################################
+
+# Install the PHP gd library
 
 #
 #--------------------------------------------------------------------------
