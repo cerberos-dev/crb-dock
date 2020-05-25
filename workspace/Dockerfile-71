@@ -6,7 +6,7 @@
 # Note: Base Image name format {image-tag}-{php-version}
 #
 
-FROM marzun/basedock:latest
+FROM phusion/baseimage:latest
 
 MAINTAINER Cerberos <development@cerberos.dev>
 
@@ -15,9 +15,47 @@ MAINTAINER Cerberos <development@cerberos.dev>
 # Mandatory Software's Installation
 #--------------------------------------------------------------------------
 #
-# Mandatory Software's such as ("php7.1-cli", "git", "vim", ....) are
+# Mandatory Software's such as (git", "vim", ....) are
 # installed on the base image
 
+RUN DEBIAN_FRONTEND=noninteractive
+RUN locale-gen en_US.UTF-8
+
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
+ENV LC_CTYPE=en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV TERM xterm
+
+RUN apt-get update && \
+    apt-get install -y --allow-downgrades --allow-remove-essential \
+        --allow-change-held-packages \
+        wget \
+        build-essential \
+        nghttp2 \
+        libnghttp2-dev \
+        libssl-dev \
+        pkg-config \
+        libedit-dev \
+        libxml2-dev \
+        xz-utils \
+        libsqlite3-dev \
+        sqlite3 \
+        git \
+        vim \
+        nano \
+    && apt-get clean
+
+#####################################
+# Curl: use a HTTP2 supported version
+#####################################
+RUN wget https://curl.haxx.se/download/curl-7.58.0.tar.gz && \
+    tar -xvf curl-7.58.0.tar.gz && \
+    cd curl-7.58.0 && \
+    ./configure --with-nghttp2 --prefix=/usr/local --with-ssl=/usr/local/ssl && \
+    make && \
+    make install && \
+    ldconfig
 #
 #--------------------------------------------------------------------------
 # Optional Software's Installation

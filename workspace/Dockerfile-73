@@ -15,7 +15,7 @@ MAINTAINER Cerberos <development@cerberos.dev>
 # Mandatory Software's Installation
 #--------------------------------------------------------------------------
 #
-# Mandatory Software's such as (git", "vim", ....) are
+# Mandatory Software's such as ("php7.2-cli", "git", "vim", ....) are
 # installed on the base image
 
 RUN DEBIAN_FRONTEND=noninteractive
