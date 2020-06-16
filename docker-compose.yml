@@ -5,6 +5,7 @@ services:
 ### Applications Code Container #############################
 
   applications:
+    container_name: crb_dock_applications
     image: tianon/true
     volumes:
       - ${APPLICATION}:${APPLICATION_LOCATION}
@@ -12,6 +13,7 @@ services:
 ### Workspace Utilities Container ###########################
 
   workspace:
+    container_name: crb_dock_workspace
     build:
       context: ./workspace
       args:
@@ -34,6 +36,7 @@ services:
 ### PHP-FPM Container #######################################
 
   php-fpm:
+    container_name: crb_dock_php-fpm
     build:
       context: ./php-fpm
       args:
@@ -70,6 +73,7 @@ services:
 ### Nginx Server Container ##################################
 
   nginx:
+    container_name: crb_dock_nginx
     build:
       context: ./nginx
       args:
@@ -91,6 +95,7 @@ services:
 ### Apache Server Container #################################
 
   apache2:
+    container_name: crb_dock_apache2
     build:
       context: ./apache2
       args:
@@ -112,6 +117,7 @@ services:
 ### MySQL Container #########################################
 
   mysql:
+    container_name: crb_dock_mysql
     build:
       context: ./mysql
     environment:
@@ -133,6 +139,7 @@ services:
 ### MariaDB Container #######################################
 
   mariadb:
+    container_name: crb_dock_mariadb
     build: ./mariadb
     environment:
       - MYSQL_DATABASE=${MARIADB_DATABASE}
@@ -150,6 +157,7 @@ services:
 ### Certbot Container ##################################
 
   certbot:
+    container_name: crb_dock_certbot
     build:
       context: ./certbot
     volumes:
@@ -164,6 +172,7 @@ services:
 ### ElasticSearch Container #################################
 
   elasticsearch:
+    container_name: crb_dock_elasticsearch
     build: ./elasticsearch
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
@@ -191,6 +200,7 @@ services:
 ### Mailcatcher ###############################################
 
   mailcatcher:
+    container_name: crb_dock_mailcatcher
     build: ./mailcatcher
     ports:
       - "${MAILCATCHER_INCOMING_PORT}:1025"
