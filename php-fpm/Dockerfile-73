@@ -28,11 +28,13 @@ RUN apt-get update && \
         libzip-dev
 
 # Install the PHP mcrypt extention
-RUN pecl install mcrypt-1.0.2
+RUN docker-php-ext-install mcrypt
+
+# Install the PHP mysqli extention
+RUN docker-php-ext-install mysqli
 
 # Install the PHP pdo_mysql extention
-RUN docker-php-ext-install mysqli \
-    && docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql
 
 # Install the PHP pdo_pgsql extention
 RUN docker-php-ext-install pdo_pgsql
@@ -103,7 +105,7 @@ RUN if [ ${INSTALL_SWOOLE} = true ]; then \
 ARG INSTALL_ZIP_ARCHIVE=false
 RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
     # Install the zip extension
- docker-php-ext-install zip \
+    docker-php-ext-install zip \
 ;fi
 
 #####################################
