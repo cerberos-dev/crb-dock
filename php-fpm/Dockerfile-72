@@ -2,7 +2,6 @@
 #--------------------------------------------------------------------------
 # Image Setup
 #--------------------------------------------------------------------------
-# Note: Base Image name format {image-tag}-{php-version}
 #
 
 FROM php:7.2-fpm
@@ -13,9 +12,6 @@ MAINTAINER Cerberos <development@cerberos.dev>
 #--------------------------------------------------------------------------
 # Mandatory Software's Installation
 #--------------------------------------------------------------------------
-#
-# Mandatory Software's such as (git", "vim", ....) are
-# installed on the base image
 #
 
 RUN apt-get update && \
@@ -31,20 +27,14 @@ RUN apt-get update && \
         libmcrypt-dev \
         zlib1g-dev
 
-#####################################
 # Install the PHP mcrypt extention
-#####################################
 RUN pecl install mcrypt-1.0.2
 
-#####################################
 # Install the PHP pdo_mysql extention
-#####################################
 RUN docker-php-ext-install mysqli \
     && docker-php-ext-install pdo_mysql
 
-#####################################
 # Install the PHP pdo_pgsql extention
-#####################################
 RUN docker-php-ext-install pdo_pgsql
 
 #
@@ -54,8 +44,6 @@ RUN docker-php-ext-install pdo_pgsql
 #
 # Optional Software's will only be installed if you set them to `true`
 # in the `docker-compose.yml` before the build.
-# Example:
-#   - INSTALL_ZIP_ARCHIVE=true
 #
 
 #####################################
@@ -115,7 +103,7 @@ RUN if [ ${INSTALL_SWOOLE} = true ]; then \
 ARG INSTALL_ZIP_ARCHIVE=false
 RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
     # Install the zip extension
- docker-php-ext-install zip \
+    docker-php-ext-install zip \
 ;fi
 
 #####################################
@@ -222,7 +210,7 @@ RUN if [ ${INSTALL_LDAP} = true ]; then \
 ARG INSTALL_IONCUBE=false
 RUN if [ ${INSTALL_IONCUBE} = true ]; then \
 cd /tmp \
-   	&& curl -o ioncube.tar.gz http://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
+    && curl -o ioncube.tar.gz http://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
     && tar -xvvzf ioncube.tar.gz \
     && mv ioncube/ioncube_loader_lin_7.2.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/ \
     && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20170718/ioncube_loader_lin_7.2.so" > /usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_7.2.ini \
