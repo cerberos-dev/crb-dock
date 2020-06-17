@@ -3,8 +3,6 @@
 # Image Setup
 #--------------------------------------------------------------------------
 #
-# Note: Base Image name format {image-tag}-{php-version}
-#
 
 FROM phusion/baseimage:latest
 
@@ -29,6 +27,7 @@ RUN apt-get update && \
     apt-get install -y --allow-downgrades --allow-remove-essential \
         --allow-change-held-packages \
         wget \
+        curl \
         build-essential \
         nghttp2 \
         libnghttp2-dev \
@@ -43,17 +42,6 @@ RUN apt-get update && \
         vim \
         nano \
     && apt-get clean
-
-#####################################
-# Curl: use a HTTP2 supported version
-#####################################
-RUN wget https://curl.haxx.se/download/curl-7.58.0.tar.gz && \
-    tar -xvf curl-7.58.0.tar.gz && \
-    cd curl-7.58.0 && \
-    ./configure --with-nghttp2 --prefix=/usr/local --with-ssl=/usr/local/ssl && \
-    make && \
-    make install && \
-    ldconfig
 
 #
 #--------------------------------------------------------------------------
