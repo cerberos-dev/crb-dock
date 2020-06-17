@@ -3,11 +3,6 @@
 # Image Setup
 #--------------------------------------------------------------------------
 #
-# To edit the 'php-fpm' base Image, visit its repository on Github
-#    https://github.com/Mvzundert/base_phpfpm
-#
-# Note: Base Image name format {image-tag}-{php-version}
-#
 
 FROM php:7.3-fpm
 
@@ -17,11 +12,6 @@ MAINTAINER Cerberos <development@cerberos.dev>
 #--------------------------------------------------------------------------
 # Mandatory Software's Installation
 #--------------------------------------------------------------------------
-#
-# Mandatory Software's such as ("mcrypt", "pdo_mysql", "libssl-dev", ....)
-# are installed on the base image 'marzun/base_phpfpm' image. If you want
-# to add more Software's or remove existing one, you need to edit the
-# base image (https://github.com/Mvzundert/base_phpfpm).
 #
 
 RUN apt-get update && \
@@ -47,12 +37,6 @@ RUN docker-php-ext-install mysqli \
 # Install the PHP pdo_pgsql extention
 RUN docker-php-ext-install pdo_pgsql
 
-#####################################
-# gd:
-#####################################
-
-# Install the PHP gd library
-
 #
 #--------------------------------------------------------------------------
 # Optional Software's Installation
@@ -60,8 +44,6 @@ RUN docker-php-ext-install pdo_pgsql
 #
 # Optional Software's will only be installed if you set them to `true`
 # in the `docker-compose.yml` before the build.
-# Example:
-#   - INSTALL_ZIP_ARCHIVE=true
 #
 
 #####################################
