@@ -236,7 +236,7 @@ cd /tmp \
 # Final Touch
 #####################################
 
-ADD ./laravel.pool.conf /usr/local/etc/php-fpm.d/
+ADD ./docker.pool.conf /usr/local/etc/php-fpm.d/
 
 #RUN rm -r /var/lib/apt/lists/*
 
