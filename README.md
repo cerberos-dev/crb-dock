@@ -23,7 +23,7 @@ Our own Docker setup.
 
 ## Switching PHP-FPM versions
 1. Make sure all containers are down (`docker ps` should give no results).
-2. Change your `.env` file to the desired version (currently supporting 5.6, 7.1 and 7.2. See example file for more info).
+2. Change your `.env` file to the desired version (currently supporting 7.1, 7.2, 7.3 and 7.4. See example file for more info).
 3. Rebuild the php-fpm container: `docker-compose build php-fpm`.
 4. Now you can use `crbDock` as usual with the desired PHP version.
 
