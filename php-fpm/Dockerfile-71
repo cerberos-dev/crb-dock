@@ -21,7 +21,7 @@ RUN apt-get update && \
         libz-dev \
         libpq-dev \
         libjpeg-dev \
-        libpng12-dev \
+        libpng-dev \
         libfreetype6-dev \
         libssl-dev \
         libmcrypt-dev \
@@ -29,9 +29,6 @@ RUN apt-get update && \
 
 # Install the PHP mcrypt extention
 RUN docker-php-ext-install mcrypt
-
-# Install the PHP mysqli extention
-RUN docker-php-ext-install mysqli
 
 # Install the PHP pdo_mysql extention
 RUN docker-php-ext-install pdo_mysql
@@ -200,7 +197,7 @@ RUN if [ ${INSTALL_INTL} = true ]; then \
 ARG INSTALL_LDAP=false
 RUN if [ ${INSTALL_LDAP} = true ]; then \
     apt-get update -yqq && \
-    apt-get install -y libldap2-dev && \
+    apt-get install -y libldap2-dev apt-utils && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
     docker-php-ext-install ldap \
 ;fi
@@ -213,8 +210,8 @@ ARG INSTALL_IONCUBE=false
 RUN if [ ${INSTALL_IONCUBE} = true ]; then \
 cd /tmp \
     && curl -o ioncube.tar.gz http://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
-    && tar -xvvzf ioncube.tar.gz \
-    && mv ioncube/ioncube_loader_lin_7.1.so /usr/local/lib/php/extensions/no-debug-non-zts-20170718/ \
+    && tar -xvzf ioncube.tar.gz \
+    && mv ioncube/ioncube_loader_lin_7.1.so /usr/local/lib/php/extensions/no-debug-non-zts-20160303/ \
     && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20160303/ioncube_loader_lin_7.1.so" > /usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_7.1.ini \
     && rm -Rf ioncube.tar.gz ioncube \
 ;fi
@@ -226,14 +223,14 @@ cd /tmp \
 ARG INSTALL_WKHTMLTOPDF=false
 RUN if [ ${INSTALL_WKHTMLTOPDF} = true ]; then \
 cd /tmp \
-    && curl -Lo wkhtmltopdf.deb https://downloads.wkhtmltopdf.org/0.12/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb \
+    && curl -Lo wkhtmltopdf.deb https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb \
     && apt-get install -y ./wkhtmltopdf.deb \
     && rm -f wkhtmltopdf.deb \
     && apt-get install -y xvfb \
 ;fi
 
 #####################################
-# Calendar Modifications:
+# Calendar:
 #####################################
 
 ARG INSTALL_CALENDAR=false
