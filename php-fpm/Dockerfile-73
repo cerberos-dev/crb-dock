@@ -160,7 +160,7 @@ RUN if [ ${INSTALL_OPCACHE} = true ]; then \
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 #####################################
-# Mysqli Modifications:
+# Mysqli:
 #####################################
 
 ARG INSTALL_MYSQLI=false
@@ -169,7 +169,7 @@ RUN if [ ${INSTALL_MYSQLI} = true ]; then \
 ;fi
 
 #####################################
-# Tokenizer Modifications:
+# Tokenizer:
 #####################################
 
 ARG INSTALL_TOKENIZER=false
