@@ -80,8 +80,8 @@ ARG INSTALL_PHPREDIS=false
 RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
     # Install Php Redis Extension
     pecl install -o -f redis \
-    &&  rm -rf /tmp/pear \
-    &&  docker-php-ext-enable redis \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable redis \
 ;fi
 
 #####################################
@@ -92,7 +92,7 @@ ARG INSTALL_SWOOLE=false
 RUN if [ ${INSTALL_SWOOLE} = true ]; then \
     # Install Php Swoole Extension
     pecl install swoole \
-    &&  docker-php-ext-enable swoole \
+    && docker-php-ext-enable swoole \
 ;fi
 
 #####################################
@@ -122,7 +122,7 @@ RUN if [ ${INSTALL_BCMATH} = true ]; then \
 ARG INSTALL_MEMCACHED=false
 RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
     # Install the php memcached extension
-    curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/php7.tar.gz" \
+    curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz" \
     && mkdir -p memcached \
     && tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
     && ( \
@@ -197,7 +197,7 @@ RUN if [ ${INSTALL_INTL} = true ]; then \
 ARG INSTALL_LDAP=false
 RUN if [ ${INSTALL_LDAP} = true ]; then \
     apt-get update -yqq && \
-    apt-get install -y libldap2-dev apt-utils && \
+    apt-get install -y libldap2-dev && \
     docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
     docker-php-ext-install ldap \
 ;fi
