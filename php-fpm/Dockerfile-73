@@ -69,11 +69,11 @@ RUN if [ ${INSTALL_XDEBUG} = true ]; then \
     docker-php-ext-enable xdebug \
 ;fi
 
-# Copy xdebug configration for remote debugging
+# Copy xdebug configuration for remote debugging
 COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 #####################################
-# PHP REDIS EXTENSION FOR PHP 7
+# PHP REDIS EXTENSION:
 #####################################
 
 ARG INSTALL_PHPREDIS=false
@@ -143,8 +143,18 @@ RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
 
 ARG INSTALL_EXIF=false
 RUN if [ ${INSTALL_EXIF} = true ]; then \
-    # Enable Exif PHP extentions requirements
+    # Enable Exif PHP extensions requirements
     docker-php-ext-install exif \
+;fi
+
+#####################################
+# GD:
+#####################################
+
+ARG INSTALL_GD=false
+RUN if [ ${INSTALL_GD} = true ]; then \
+    # Enable GD PHP extensions requirements
+    docker-php-ext-install gd \
 ;fi
 
 #####################################
@@ -156,7 +166,7 @@ RUN if [ ${INSTALL_OPCACHE} = true ]; then \
     docker-php-ext-install opcache \
 ;fi
 
-# Copy opcache configration
+# Copy opcache configuration
 COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 
 #####################################
