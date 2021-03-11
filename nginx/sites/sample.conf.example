@@ -3,12 +3,18 @@ server {
     listen 80;
     listen [::]:80;
 
-    server_name sample.local;
-    root /var/www/sample;
+    # For https
+    listen 443 ssl;
+    listen [::]:443 ssl;
+    ssl_certificate /etc/nginx/ssl/crb-dock.crt;
+    ssl_certificate_key /etc/nginx/ssl/crb-dock.key;
+
+    server_name sample.crb;
+    root /var/www/sample/;
     index index.php index.html index.htm;
 
     location / {
-         try_files $uri $uri/ /index.php$is_args$args;
+        try_files $uri $uri/ /index.php$is_args$args;
     }
 
     location ~ \.php$ {
@@ -30,4 +36,7 @@ server {
 
         log_not_found off;
     }
+
+    error_log /var/log/nginx/error/sample.crb.log;
+    access_log /var/log/nginx/access/sample.crb.log;
 }
