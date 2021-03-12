@@ -29,6 +29,8 @@ services:
     ports:
       - "${WORKSPACE_SSH_PORT}:22"
     tty: true
+    depends_on:
+      - portainer
     networks:
       - frontend
       - backend
@@ -212,6 +214,19 @@ services:
     networks:
       - frontend
       - backend
+
+### Portainer ###############################################
+
+  portainer:
+    container_name: crb_dock_portainer
+    image: portainer/portainer-ce
+    command: -H unix:///var/run/docker.sock
+    ports:
+      - "9000:9000"
+      - "8000:8000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_SAVE_PATH}/portainer:/data
 
 ### Networks Setup ############################################
 
