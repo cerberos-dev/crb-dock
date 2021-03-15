@@ -10,16 +10,31 @@ if [[ "$(uname)" == "Darwin" ]]; then
         sudo launchctl stop homebrew.mxcl.dnsmasq
     else
         # We know nothing Jon Snow (so we install dnsmasq)
-        source brew.sh
+        if test ! $(which brew); then
+            echo "Installing homebrew"
+
+            ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        fi
+
+        echo -e "\n\nInstalling homebrew packages..."
+        echo "=============================="
+
+        formulas=(
+            dnsmasq
+        )
+
+        for formula in "${formulas[@]}"; do
+            if brew list "$formula" > /dev/null 2>&1; then
+                echo "$formula already installed... skipping."
+            else
+                brew install $formula
+            fi
+        done
     fi
 
-    # Add .crb and .local to the DNS Masq config
+    # Add .crb and .local to the dnsmasq config
     echo 'address=/.crb/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
-    echo 'address=/.local/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
-
-    # Add .yad and .sprd to the DNS Masq config for backwards compatibility with old installs
-    echo 'address=/.yad/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
-    echo 'address=/.sprd/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
+    echo 'address=/.local/127.0.0.1'; >> $(brew --prefix)/etc/dnsmasq.conf
 
     if ! [[ -f '/Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist' ]]; then
         # Copy the daemon configuration file into place.
