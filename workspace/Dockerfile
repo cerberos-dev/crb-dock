@@ -101,32 +101,6 @@ RUN echo "" >> ~/.bashrc && \
 	sed -i 's/\r//' /home/crbdock/aliases.sh && \
 	sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/crbdock/aliases.sh
 
-#####################################
-# xDebug:
-#####################################
-
-ARG INSTALL_XDEBUG=false
-RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-    # Load the xdebug extension only with phpunit commands
-    apt-get -y update && apt-get install -y --force-yes php7.1-xdebug \
-;fi
-# ADD for REMOTE debugging
-COPY ./xdebug.ini /etc/php/7.1/cli/conf.d/xdebug.ini
-
-#####################################
-# MongoDB:
-#####################################
-
-# Check if Mongo needs to be installed
-ARG INSTALL_MONGO=false
-ENV INSTALL_MONGO ${INSTALL_MONGO}
-RUN if [ ${INSTALL_MONGO} = true ]; then \
-    # Install the mongodb extension
-    pecl install mongodb && \
-    echo "extension=mongodb.so" >> /etc/php/7.1/mods-available/mongodb.ini && \
-    ln -s /etc/php/7.1/mods-available/mongodb.ini /etc/php/7.1/cli/conf.d/30-mongodb.ini \
-;fi
-
 ######################################
 # Final Touch
 ######################################
