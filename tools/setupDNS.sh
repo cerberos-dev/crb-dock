@@ -34,7 +34,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
 
     # Add .crb and .local to the dnsmasq config
     echo 'address=/.crb/127.0.0.1' > $(brew --prefix)/etc/dnsmasq.conf
-    echo 'address=/.local/127.0.0.1'; >> $(brew --prefix)/etc/dnsmasq.conf
+    echo 'address=/.local/127.0.0.1' >> $(brew --prefix)/etc/dnsmasq.conf
 
     if ! [[ -f '/Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist' ]]; then
         # Copy the daemon configuration file into place.
