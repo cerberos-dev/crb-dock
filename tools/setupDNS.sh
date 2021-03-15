@@ -52,11 +52,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
     sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/crb'
     sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/local'
 
-    # Create .yad and .sprd resolver files for backwards compatibility
-    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/yad'
-    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/sprd'
-
-
     # Make sure DNSMASQ is started
     sudo launchctl start homebrew.mxcl.dnsmasq
 
