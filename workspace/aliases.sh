@@ -1,84 +1,35 @@
 #! /bin/bash
 
-# Colors used for status updates
-ESC_SEQ="\x1b["
-COL_RESET=$ESC_SEQ"39;49;00m"
-COL_RED=$ESC_SEQ"31;01m"
-COL_GREEN=$ESC_SEQ"32;01m"
-COL_YELLOW=$ESC_SEQ"33;01m"
-COL_BLUE=$ESC_SEQ"34;01m"
-COL_MAGENTA=$ESC_SEQ"35;01m"
-COL_CYAN=$ESC_SEQ"36;01m"
+# Source global definitions
+if [ -f /etc/bashrc ]; then
+    . /etc/bashrc
+fi
 
-# Commonly Used Aliases
-alias ..="cd .."
-alias ...="cd ../.."
-alias ....="cd ../../.."
-alias .....="cd ../../../.."
-alias ~="cd ~" # `cd` is probably faster to type though
-alias -- -="cd -"
-alias home="cd ~"
+# Uncomment the following line if you don't like systemctl's auto-paging feature:
+# export SYSTEMD_PAGER=
 
-alias h="history"
-alias j="jobs"
-alias e='exit'
-alias c="clear"
-alias cla="clear && ls -la"
-alias cll="clear && ls -l"
-alias cls="clear && ls"
-alias code="cd /var/www"
-alias ea="vi ~/aliases"
-alias g="gulp"
-alias home="cd ~"
-alias npm-global="npm list -g --depth 0"
-alias ra="reload"
-alias reload="source ~/.aliases && echo \"$COL_GREEN ==> Aliases Reloaded... $COL_RESET \n \""
-alias run="npm run"
-alias tree="xtree"
+# Set xterm as terminal
+export TERM="xterm"
 
-# Laravel / PHP Alisases
-alias art="php artisan"
-alias cdump="composer dump-autoload -o"
-alias composer:dump="composer dump-autoload -o"
-alias db:reset="php artisan migrate:reset && php artisan migrate --seed"
-alias migrate="php artisan migrate"
-alias seed="php artisan:seed"
-alias phpunit="./vendor/bin/phpunit"
-alias artg="php artisan list | grep"
-alias artr="php artisan route:list"
-alias artrg="php artisan route:list | grep"
-alias artmr="php artisan migrate:refresh"
-alias artmrs="php artisan migrate:refresh --seed"
+# Custom aliases
+#########################################################
 
-# requires installation of 'https://www.npmjs.com/package/npms-cli'
-alias npms="npms search"
+# Set directory helpers
+alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'
+alias .....='cd ../../../..'
+alias ......='cd ../../../../..'
 
-# requires installation of 'https://www.npmjs.com/package/package-menu-cli'
-alias pm="package-menu"
+# List everything in directory
+alias ll="ls -lah"
 
-# requires installation of 'https://www.npmjs.com/package/pkg-version-cli'
-alias pv="package-version"
+# History / Alias helpers
+alias ag='alias | grep'
+alias hg='history | grep'
 
-# requires installation of 'https://github.com/sindresorhus/latest-version-cli'
-alias lv="latest-version"
+# Reload Bash
+alias reload=". ~/.bashrc"
 
-# git aliases
-alias gaa="git add ."
-alias gd="git --no-pager diff"
-alias git-revert="git reset --hard && git clean -df"
-alias gs="git status"
-alias whoops="git reset --hard && git clean -df"
-
-
-# Create a new directory and enter it
-function mkd() {
-    mkdir -p "$@" && cd "$@"
-}
-
-function md() {
-    mkdir -p "$@" && cd "$@"
-}
-
-function xtree {
-    find ${1:-.} -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'
-}
+# List files by size
+alias size='du -sh * | sort -r -n | grep "[0-9][G|M]"'
