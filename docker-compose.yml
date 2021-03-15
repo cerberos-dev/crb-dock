@@ -2,7 +2,7 @@ version: '2'
 
 services:
 
-### Applications Code Container #############################
+  ### Applications Code Container #############################
 
   applications:
     container_name: crb_dock_applications
@@ -10,18 +10,16 @@ services:
     volumes:
       - ${APPLICATION}:${APPLICATION_LOCATION}
 
-### Workspace Utilities Container ###########################
+  ### Workspace Utilities Container ###########################
 
   workspace:
     container_name: crb_dock_workspace
     build:
       context: ./workspace
       args:
-        - INSTALL_XDEBUG=${WORKSPACE_INSTALL_XDEBUG}
         - PGID=${WORKSPACE_PGID}
         - PUID=${WORKSPACE_PUID}
         - TZ=${WORKSPACE_TIMEZONE}
-      dockerfile: "Dockerfile-${PHP_VERSION}"
     volumes_from:
       - applications
     extra_hosts:
@@ -32,10 +30,10 @@ services:
     depends_on:
       - portainer
     networks:
-      - frontend
-      - backend
+      - crb_dock_frontend
+      - crb_dock_backend
 
-### PHP-FPM Container #######################################
+  ### PHP-FPM Container #######################################
 
   php-fpm:
     container_name: crb_dock_php-fpm
@@ -73,9 +71,9 @@ services:
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
     networks:
-      - backend
+      - crb_dock_backend
 
-### Nginx Server Container ##################################
+  ### Nginx Server Container ##################################
 
   nginx:
     container_name: crb_dock_nginx
@@ -95,10 +93,10 @@ services:
     depends_on:
       - php-fpm
     networks:
-      - frontend
-      - backend
+      - crb_dock_frontend
+      - crb_dock_backend
 
-### Apache Server Container #################################
+  ### Apache Server Container #################################
 
   apache2:
     container_name: crb_dock_apache2
@@ -117,10 +115,10 @@ services:
     depends_on:
       - php-fpm
     networks:
-      - frontend
-      - backend
+      - crb_dock_frontend
+      - crb_dock_backend
 
-### MySQL Container #########################################
+  ### MySQL Container #########################################
 
   mysql:
     container_name: crb_dock_mysql
@@ -138,11 +136,11 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
     networks:
-      - backend
+      - crb_dock_backend
     expose:
       - "${MYSQL_PORT}"
 
-### MariaDB Container #######################################
+  ### MariaDB Container #######################################
 
   mariadb:
     container_name: crb_dock_mariadb
@@ -158,24 +156,24 @@ services:
     ports:
       - "${MARIADB_PORT}:3306"
     networks:
-      - backend
+      - crb_dock_backend
 
-### Certbot Container ##################################
+  ### Certbot Container ######################################
 
   certbot:
     container_name: crb_dock_certbot
     build:
       context: ./certbot
     volumes:
-      - ./data/certbot/certs/:/var/certs
-      - ./certbot/letsencrypt/:/var/www/letsencrypt
+      - ${DATA_SAVE_PATH}/certbot/certs/:/var/certs
+      - ${DATA_SAVE_PATH}/certbot/letsencrypt/:/var/www/letsencrypt
     environment:
       - CN="crb-dock.crb"
       - EMAIL="crb-dock@cerberos.dev"
     networks:
-      - frontend
+      - crb_dock_frontend
 
-### ElasticSearch Container #################################
+  ### ElasticSearch Container #################################
 
   elasticsearch:
     container_name: crb_dock_elasticsearch
@@ -183,7 +181,7 @@ services:
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
       - elasticsearch-plugins:/usr/share/elasticsearch/plugins
-      - ./elasticsearch/config:/usr/share/elasticsearch/config
+      - elasticsearch-config:/usr/share/elasticsearch/config
     environment:
       - cluster.name=crbdock-cluster
       - bootstrap.memory_lock=true
@@ -200,10 +198,10 @@ services:
     depends_on:
       - php-fpm
     networks:
-      - frontend
-      - backend
+      - crb_dock_frontend
+      - crb_dock_backend
 
-### Mailcatcher ###############################################
+  ### Mailcatcher ###############################################
 
   mailcatcher:
     container_name: crb_dock_mailcatcher
@@ -212,28 +210,31 @@ services:
       - "${MAILCATCHER_INCOMING_PORT}:1025"
       - "${MAILCATCHER_WEBCLIENT_PORT}:1080"
     networks:
-      - frontend
-      - backend
+      - crb_dock_frontend
+      - crb_dock_backend
 
-### Portainer ###############################################
+  ### Portainer ###############################################
 
   portainer:
     container_name: crb_dock_portainer
     image: portainer/portainer-ce
     command: -H unix:///var/run/docker.sock
     ports:
-      - "9000:9000"
-      - "8000:8000"
+      - "${PORTAINER_WEB_PORT}:9000"
+      - "${PORTAINER_API_PORT}:8000"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DATA_SAVE_PATH}/portainer:/data
+    networks:
+      - crb_dock_frontend
+      - crb_dock_backend
 
 ### Networks Setup ############################################
 
 networks:
-  frontend:
+  crb_dock_frontend:
     driver: "bridge"
-  backend:
+  crb_dock_backend:
     driver: "bridge"
 
 ### Volumes Setup #############################################
