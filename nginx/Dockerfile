@@ -1,6 +1,6 @@
 FROM nginx:alpine
 
-MAINTAINER Cerberos <development@cerberos.dev>
+LABEL key="Cerberos <development@cerberos.dev>"
 
 ADD nginx.conf /etc/nginx/
 
