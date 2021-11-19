@@ -2,8 +2,9 @@ version: '3.9'
 
 services:
 
-  ### Workspace Utilities Container ###########################
-
+  #--------------------------------------------------------------------------
+  # Workspace Utilities Container
+  #--------------------------------------------------------------------------
   workspace:
     container_name: crb_dock_workspace
     build:
@@ -25,8 +26,9 @@ services:
       - frontend
       - backend
 
-  ### PHP-FPM Container #######################################
-
+  #--------------------------------------------------------------------------
+  # PHP-FPM Container
+  #--------------------------------------------------------------------------
   php-fpm:
     container_name: crb_dock_php-fpm
     build:
@@ -37,7 +39,7 @@ services:
         - INSTALL_EXIF=${PHP_FPM_INSTALL_EXIF}
         - INSTALL_GD=${PHP_FPM_INSTALL_GD}
         - INSTALL_INTL=${PHP_FPM_INSTALL_INTL}
-        - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
+        - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE} # IONCUBE is not support when using PHP 8.0
         - INSTALL_LDAP=${PHP_FPM_INSTALL_LDAP}
         - INSTALL_MEMCACHED=${PHP_FPM_INSTALL_MEMCACHED}
         - INSTALL_MYSQLI=${PHP_FPM_INSTALL_MYSQLI}
@@ -64,8 +66,9 @@ services:
     networks:
       - backend
 
-  ### Nginx Server Container ##################################
-
+  #--------------------------------------------------------------------------
+  # Nginx Server Container
+  #--------------------------------------------------------------------------
   nginx:
     container_name: crb_dock_nginx
     build:
@@ -86,8 +89,9 @@ services:
       - frontend
       - backend
 
-  ### Apache Server Container #################################
-
+  #--------------------------------------------------------------------------
+  # Apache Server Container
+  #--------------------------------------------------------------------------
   apache2:
     container_name: crb_dock_apache2
     build:
@@ -107,8 +111,9 @@ services:
       - frontend
       - backend
 
-  ### MySQL Container #########################################
-
+  #--------------------------------------------------------------------------
+  # MySQL Container
+  #--------------------------------------------------------------------------
   mysql:
     container_name: crb_dock_mysql
     build:
@@ -129,8 +134,9 @@ services:
     expose:
       - "${MYSQL_PORT}"
 
-  ### MariaDB Container #######################################
-
+  #--------------------------------------------------------------------------
+  # MariaDB Container
+  #--------------------------------------------------------------------------
   mariadb:
     container_name: crb_dock_mariadb
     build: ./mariadb
@@ -147,8 +153,9 @@ services:
     networks:
       - backend
 
-  ### Certbot Container ######################################
-
+  #--------------------------------------------------------------------------
+  # Certbot Container
+  #--------------------------------------------------------------------------
   certbot:
     container_name: crb_dock_certbot
     build:
@@ -162,8 +169,9 @@ services:
     networks:
       - frontend
 
-  ### ElasticSearch Container #################################
-
+  #--------------------------------------------------------------------------
+  # ElasticSearch Container
+  #--------------------------------------------------------------------------
   elasticsearch:
     container_name: crb_dock_elasticsearch
     build: ./elasticsearch
@@ -190,8 +198,9 @@ services:
       - frontend
       - backend
 
-  ### Mailcatcher ###############################################
-
+  #--------------------------------------------------------------------------
+  # Mailcatcher
+  #--------------------------------------------------------------------------
   mailcatcher:
     container_name: crb_dock_mailcatcher
     build: ./mailcatcher
@@ -202,8 +211,9 @@ services:
       - frontend
       - backend
 
-  ### Portainer ###############################################
-
+  #--------------------------------------------------------------------------
+  # Portainer
+  #--------------------------------------------------------------------------
   portainer:
     container_name: crb_dock_portainer
     image: portainer/portainer-ce
@@ -218,16 +228,18 @@ services:
       - frontend
       - backend
 
-### Networks Setup ############################################
-
+#--------------------------------------------------------------------------
+# Networks Setup
+#--------------------------------------------------------------------------
 networks:
   frontend:
     driver: "bridge"
   backend:
     driver: "bridge"
 
-### Volumes Setup #############################################
-
+#--------------------------------------------------------------------------
+# Volumes Setup
+#--------------------------------------------------------------------------
 volumes:
   elasticsearch-data:
     driver: local
