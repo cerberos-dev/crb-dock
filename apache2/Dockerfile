@@ -1,6 +1,6 @@
 FROM webdevops/apache:ubuntu-18.04
 
-MAINTAINER Cerberos <development@cerberos.dev>
+LABEL key="Cerberos <development@cerberos.dev>"
 
 ARG PHP_UPSTREAM_CONTAINER=php-fpm
 ARG PHP_UPSTREAM_PORT=9000

@@ -1,6 +1,6 @@
 FROM phusion/baseimage:bionic-1.0.0
 
-MAINTAINER Cerberos <development@cerberos.dev>
+LABEL key="Cerberos <development@cerberos.dev>"
 
 COPY run-certbot.sh /root/certbot/run-certbot.sh
 
