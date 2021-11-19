@@ -1,6 +1,6 @@
 FROM mariadb:latest
 
-MAINTAINER Cerberos <development@cerberos.dev>
+LABEL key="Cerberos <development@cerberos.dev>"
 
 ADD my.cnf /etc/mysql/conf.d/my.cnf
 
