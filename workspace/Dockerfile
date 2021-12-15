@@ -1,6 +1,7 @@
 #--------------------------------------------------------------------------
 # Image Setup
 #--------------------------------------------------------------------------
+
 FROM phusion/baseimage:bionic-1.0.0
 
 LABEL key="Cerberos <development@cerberos.dev>"
@@ -8,6 +9,7 @@ LABEL key="Cerberos <development@cerberos.dev>"
 #--------------------------------------------------------------------------
 # Mandatory Software's Installation
 #--------------------------------------------------------------------------
+
 RUN DEBIAN_FRONTEND=noninteractive
 RUN locale-gen en_US.UTF-8
 
@@ -37,15 +39,16 @@ RUN apt-get update && \
         nano \
     && apt-get clean
 
-#
+
 #--------------------------------------------------------------------------
 # Optional Software's Installation
 #--------------------------------------------------------------------------
 
+
 #--------------------------------------------------------------------------
-# Non-Root User:
-# Add a non-root user to prevent files being created with root permissions on host machine.
+# Non-Root User: Add a non-root user to prevent files being created with root permissions on host machine.
 #--------------------------------------------------------------------------
+
 ARG PUID=1000
 ARG PGID=1000
 
@@ -59,6 +62,7 @@ RUN groupadd -g ${PGID} crbdock && \
 #--------------------------------------------------------------------------
 # Set Timezone
 #--------------------------------------------------------------------------
+
 ARG TZ=UTC
 ENV TZ ${TZ}
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
@@ -66,6 +70,7 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 #--------------------------------------------------------------------------
 # Crontab
 #--------------------------------------------------------------------------
+
 USER root
 
 COPY ./crontab /etc/cron.d
@@ -74,6 +79,7 @@ RUN chmod -R 644 /etc/cron.d
 #--------------------------------------------------------------------------
 # User Aliases
 #--------------------------------------------------------------------------
+
 USER crbdock
 COPY ./aliases.sh /home/crbdock/aliases.sh
 RUN echo "" >> ~/.bashrc && \
@@ -94,6 +100,7 @@ RUN echo "" >> ~/.bashrc && \
 #--------------------------------------------------------------------------
 # Final Touch
 #--------------------------------------------------------------------------
+
 # Clean up
 USER root
 RUN apt-get clean && \

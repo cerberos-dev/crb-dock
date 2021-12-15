@@ -2,6 +2,7 @@
 # Image Setup
 #--------------------------------------------------------------------------
 
+
 FROM php:7.4-fpm
 
 LABEL key="Cerberos <development@cerberos.dev>"
@@ -9,6 +10,7 @@ LABEL key="Cerberos <development@cerberos.dev>"
 #--------------------------------------------------------------------------
 # Mandatory Software's Installation
 #--------------------------------------------------------------------------
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         curl \
@@ -31,6 +33,7 @@ RUN docker-php-ext-install pdo_mysql
 # Install the PHP pdo_pgsql extention
 RUN docker-php-ext-install pdo_pgsql
 
+
 #--------------------------------------------------------------------------
 # Optional Software's Installation
 #
@@ -38,9 +41,11 @@ RUN docker-php-ext-install pdo_pgsql
 # in the `docker-compose.yml` before the build.
 #--------------------------------------------------------------------------
 
+
 #--------------------------------------------------------------------------
 # SOAP:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_SOAP=false
 RUN if [ ${INSTALL_SOAP} = true ]; then \
     # Install the soap extension
@@ -53,6 +58,7 @@ RUN if [ ${INSTALL_SOAP} = true ]; then \
 #--------------------------------------------------------------------------
 # xDebug:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_XDEBUG=false
 RUN if [ ${INSTALL_XDEBUG} = true ]; then \
     # Install the xdebug extension
@@ -66,6 +72,7 @@ COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 #--------------------------------------------------------------------------
 # PHP REDIS EXTENSION:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_PHPREDIS=false
 RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
     # Install Php Redis Extension
@@ -77,6 +84,7 @@ RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
 #--------------------------------------------------------------------------
 # Swoole EXTENSION FOR PHP 7
 #--------------------------------------------------------------------------
+
 ARG INSTALL_SWOOLE=false
 RUN if [ ${INSTALL_SWOOLE} = true ]; then \
     # Install Php Swoole Extension
@@ -87,6 +95,7 @@ RUN if [ ${INSTALL_SWOOLE} = true ]; then \
 #--------------------------------------------------------------------------
 # ZipArchive:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_ZIP_ARCHIVE=false
 RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
     # Install the zip extension
@@ -96,6 +105,7 @@ RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
 #--------------------------------------------------------------------------
 # bcmath:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_BCMATH=false
 RUN if [ ${INSTALL_BCMATH} = true ]; then \
     # Install the bcmath extension
@@ -105,6 +115,7 @@ RUN if [ ${INSTALL_BCMATH} = true ]; then \
 #--------------------------------------------------------------------------
 # PHP Memcached:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_MEMCACHED=false
 RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
     # Install the php memcached extension
@@ -126,6 +137,7 @@ RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
 #--------------------------------------------------------------------------
 # Exif:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_EXIF=false
 RUN if [ ${INSTALL_EXIF} = true ]; then \
     # Enable Exif PHP extensions requirements
@@ -135,6 +147,7 @@ RUN if [ ${INSTALL_EXIF} = true ]; then \
 #--------------------------------------------------------------------------
 # GD:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_GD=false
 RUN if [ ${INSTALL_GD} = true ]; then \
     # Enable GD PHP extensions requirements
@@ -144,6 +157,7 @@ RUN if [ ${INSTALL_GD} = true ]; then \
 #--------------------------------------------------------------------------
 # Opcache:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_OPCACHE=false
 RUN if [ ${INSTALL_OPCACHE} = true ]; then \
     docker-php-ext-install opcache \
@@ -155,6 +169,7 @@ COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
 #--------------------------------------------------------------------------
 # Mysqli:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_MYSQLI=false
 RUN if [ ${INSTALL_MYSQLI} = true ]; then \
     docker-php-ext-install mysqli \
@@ -163,6 +178,7 @@ RUN if [ ${INSTALL_MYSQLI} = true ]; then \
 #--------------------------------------------------------------------------
 # Tokenizer:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_TOKENIZER=false
 RUN if [ ${INSTALL_TOKENIZER} = true ]; then \
     docker-php-ext-install tokenizer \
@@ -171,6 +187,7 @@ RUN if [ ${INSTALL_TOKENIZER} = true ]; then \
 #--------------------------------------------------------------------------
 # Human Language and Character Encoding Support:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_INTL=false
 RUN if [ ${INSTALL_INTL} = true ]; then \
     # Install intl and requirements
@@ -183,6 +200,7 @@ RUN if [ ${INSTALL_INTL} = true ]; then \
 #--------------------------------------------------------------------------
 # LDAP:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_LDAP=false
 RUN if [ ${INSTALL_LDAP} = true ]; then \
     apt-get update -yqq && \
@@ -194,6 +212,7 @@ RUN if [ ${INSTALL_LDAP} = true ]; then \
 #--------------------------------------------------------------------------
 # IonCube:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_IONCUBE=false
 RUN if [ ${INSTALL_IONCUBE} = true ]; then \
 cd /tmp \
@@ -207,6 +226,7 @@ cd /tmp \
 #--------------------------------------------------------------------------
 # WKHtmlToPDF:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_WKHTMLTOPDF=false
 RUN if [ ${INSTALL_WKHTMLTOPDF} = true ]; then \
 cd /tmp \
@@ -219,6 +239,7 @@ cd /tmp \
 #--------------------------------------------------------------------------
 # Calendar:
 #--------------------------------------------------------------------------
+
 ARG INSTALL_CALENDAR=false
 RUN if [ ${INSTALL_CALENDAR} = true ]; then \
     docker-php-ext-install calendar \
@@ -227,6 +248,7 @@ RUN if [ ${INSTALL_CALENDAR} = true ]; then \
 #--------------------------------------------------------------------------
 # Final Touch
 #--------------------------------------------------------------------------
+
 ADD ./docker.pool.conf /usr/local/etc/php-fpm.d/
 
 #RUN rm -r /var/lib/apt/lists/*
