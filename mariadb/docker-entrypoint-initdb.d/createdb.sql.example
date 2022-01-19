@@ -1,2 +1,2 @@
-GRANT ALL ON *.* TO 'crb_dock'@'%' ;
-FLUSH PRIVILEGES ;
+GRANT ALL ON *.* TO 'crb_dock'@'%';
+FLUSH PRIVILEGES;
