@@ -5,7 +5,7 @@ Our own Docker setup.
 1. `git clone https://github.com/cerberos-dev/crb-dock.git`.
 2. Copy `.env.example` to `.env`.
 3. Edit `.env` to fit local environment.
-4. Start containers: `docker-compose up -d {nginx} {apache2} {mysql}`.
+4. Start containers: `docker-compose up -d {nginx} {mysql}`.
 
 ## NGINX setup
 1. Go to `nginx/sites` copy an example config to a `<project-name>.conf file.`
@@ -14,16 +14,9 @@ Our own Docker setup.
 4. Stop the NGINX container: `docker-compose stop nginx`.
 5. Start the NGINX container to sync `.conf` files: `docker-compose up -d nginx`.
 
-## Apache2 setup
-1. Go to `apache2/sites` copy an example config to a `<project-name>.conf file.`
-2. Edit the config file to fit the project.
-3. Adjust your local host file (For example: `/etc/hosts`).
-4. Stop the Apache2 container: `docker-compose stop apache2`.
-5. Start the Apache2 container to sync `.conf` files: `docker-compose up -d apache2`.
-
 ## Switching PHP-FPM versions
 1. Make sure all containers are down (`docker ps` should give no results).
-2. Change your `.env` file to the desired version (currently supporting 7.1, 7.2, 7.3 and 7.4. See example file for more info).
+2. Change your `.env` file to the desired version (currently supporting 7.4 and 8.0. See example file for more info).
 3. Rebuild the php-fpm container: `docker-compose build php-fpm`.
 4. Now you can use `crbDock` as usual with the desired PHP version.
 
