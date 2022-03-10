@@ -1,2 +1,0 @@
-GRANT ALL ON *.* TO 'crb_dock'@'%' ;
-FLUSH PRIVILEGES ;
