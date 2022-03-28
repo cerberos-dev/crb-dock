@@ -5,7 +5,11 @@ Our own Docker setup.
 1. `git clone https://github.com/cerberos-dev/crb-dock.git`.
 2. Copy `.env.example` to `.env`.
 3. Edit `.env` to fit local environment.
-4. Start containers: `docker-compose up -d {nginx} {mariadb}`.
+4. Start containers: `docker-compose up -d`.
+
+You can also start the containers and display debug information with:
+
+`docker-compose up`
 
 ## NGINX setup
 1. Go to `nginx/sites` copy an example config to a `<project-name>.conf file.`
@@ -27,9 +31,6 @@ Our own Docker setup.
 4. When the build is complete you can bring the containers up again like usual
 
 # Notes
-## docker-compose up
-There is no need to up the `workspace` or the `php` container because they are linked to the webserver (NGINX / Apache2) and database containers.
-
 ## DNS and crbDock
 Make resolving hosts easier by using DNSMASQ (works on OSX / Linux) we're going to give an description regarding the OSX install
 
