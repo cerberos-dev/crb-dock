@@ -20,11 +20,8 @@ services:
       - "dockerhost:${DOCKER_HOST_IP}"
     ports:
       - "${WORKSPACE_SSH_PORT}:22"
-    tty: true
-    depends_on:
-      - portainer
-    networks:
-      - frontend
+    tty: true    
+    networks:      
       - backend
 
   #--------------------------------------------------------------------------
@@ -87,9 +84,8 @@ services:
       - "${NGINX_HOST_HTTP_PORT}:80"
       - "${NGINX_HOST_HTTPS_PORT}:443"
     depends_on:
-      - php-fpm
+      - workspace
     networks:
-      - frontend
       - backend
 
   #--------------------------------------------------------------------------
@@ -107,6 +103,8 @@ services:
     volumes:
       - ${DATA_SAVE_PATH}/mariadb:/var/lib/mysql
       - ${MARIADB_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
+    depends_on:
+      - workspace
     ports:
       - "${MARIADB_PORT}:3306"
     networks:
@@ -126,28 +124,15 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DATA_SAVE_PATH}/portainer:/data
-    networks:
-      - frontend
+    depends_on:
+      - workspace
+    networks:      
       - backend
 
 #--------------------------------------------------------------------------
 # Networks Setup
 #--------------------------------------------------------------------------
 
-networks:
-  frontend:
-    driver: "bridge"
+networks:  
   backend:
     driver: "bridge"
-
-#--------------------------------------------------------------------------
-# Volumes Setup
-#--------------------------------------------------------------------------
-
-volumes:
-  elasticsearch-data:
-    driver: local
-  elasticsearch-plugins:
-    driver: local
-  elasticsearch-config:
-    driver: local
