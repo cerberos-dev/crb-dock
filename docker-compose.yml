@@ -73,8 +73,6 @@ services:
     container_name: crb_dock_nginx
     build:
       context: ./nginx
-      args:
-        - PHP_UPSTREAM=php-fpm
     volumes:
       - ${APPLICATION}:${APPLICATION_LOCATION}
       - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
