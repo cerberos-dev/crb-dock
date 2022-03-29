@@ -14,6 +14,7 @@ server {
 
     # Server settings
     server_name sample.crb;
+    # server_name sample.local;
     root /var/www/sample/;
     index index.php index.html index.htm;
 
