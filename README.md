@@ -25,7 +25,7 @@ You can also start the containers and display debug information with: `docker-co
 ## DNS and `crb-dock`
 Make resolving hosts easier by using Dnsmasq, setup script included in tools directory (macOS only).
 
-### Wow-to run our dnsmasq setup script
+### How-to run our dnsmasq setup script
 <sup>It will request sudo access so make sure you know your password.</sup>
 1. Enter the directory `tools`.
 2. Run the `setupDNS.sh` script.
