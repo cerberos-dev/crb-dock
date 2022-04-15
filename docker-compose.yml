@@ -22,7 +22,7 @@ services:
       - "${WORKSPACE_SSH_PORT}:22"
     tty: true    
     networks:      
-      - crb_dock
+      - internal
 
   # --------------------------------------------------------------------------
   # PHP-FPM Container
@@ -63,7 +63,7 @@ services:
     extra_hosts:
       - "dockerhost:${DOCKER_HOST_IP}"
     networks:
-      - crb_dock
+      - internal
 
   # --------------------------------------------------------------------------
   # Nginx Server Container
@@ -84,7 +84,7 @@ services:
     depends_on:
       - workspace
     networks:
-      - crb_dock
+      - internal
 
   # --------------------------------------------------------------------------
   # MariaDB Container
@@ -106,7 +106,7 @@ services:
     ports:
       - "${MARIADB_PORT}:3306"
     networks:
-      - crb_dock
+      - internal
 
   # --------------------------------------------------------------------------
   # Portainer
@@ -125,12 +125,12 @@ services:
     depends_on:
       - workspace
     networks:      
-      - crb_dock
+      - internal
 
 # --------------------------------------------------------------------------
 # Networks Setup
 # --------------------------------------------------------------------------
 
 networks:  
-  crb_dock:
+  internal:
     driver: "bridge"
