@@ -1,18 +1,15 @@
 #!/bin/bash
 
 if [ ! -f /etc/nginx/ssl/crb-dock.crt ]; then
-    openssl genrsa -out "/etc/nginx/ssl/crb-dock.key" 2048
-
     openssl req -new \
-      -key "/etc/nginx/ssl/crb-dock.key" \
-      -out "/etc/nginx/ssl/crb-dock.csr" \
-      -subj "/CN=CRB-Dock/O=CRB-Dock/C=NL" \
-      -addext "extendedKeyUsage=serverAuth"
-
-    openssl x509 -req -days 365 \
-      -in "/etc/nginx/ssl/crb-dock.csr" \
-      -signkey "/etc/nginx/ssl/crb-dock.key" \
-      -out "/etc/nginx/ssl/crb-dock.crt"
+        -newkey rsa:4096 \
+        -x509 \
+        -sha256 \
+        -days 365 \
+        -nodes \
+        -subj "/CN=CRB-Dock/O=Cerberos/C=NL" \
+        -out '/etc/nginx/ssl/crb-dock.crt' \
+        -keyout '/etc/nginx/ssl/crb-dock.key'
 
     chmod 644 /etc/nginx/ssl/crb-dock.key
 fi
