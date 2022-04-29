@@ -8,13 +8,9 @@ LABEL key="Cerberos <development@cerberos.dev>"
 
 # --------------------------------------------------------------------------
 # Mandatory Software's Installation
-# --------------------------------------------------------------------------
-
-ADD nginx.conf /etc/nginx/
-
-ARG PHP_UPSTREAM=php-fpm
-
+#
 # If you're in China, or you need to change sources, will be set CHANGE_SOURCE to true in .env.
+# --------------------------------------------------------------------------
 
 ARG CHANGE_SOURCE=false
 RUN if [ ${CHANGE_SOURCE} = true ]; then \
@@ -22,24 +18,21 @@ RUN if [ ${CHANGE_SOURCE} = true ]; then \
     sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/' /etc/apk/repositories \
 ;fi
 
+ADD nginx.conf /etc/nginx/
+
 RUN apk update \
     && apk upgrade \
     && apk add --no-cache bash \
     && apk add --no-cache openssl \
-    && apk add --no-cache bash \
     && apk add --no-cache curl \
     && adduser -D -H -u 1000 -s /bin/bash -Gwww-data www-data \
     && rm /etc/nginx/conf.d/default.conf
 
 # --------------------------------------------------------------------------
-# Optional Software's Installation
-# --------------------------------------------------------------------------
-
-
-# --------------------------------------------------------------------------
 # Final Touch
 # --------------------------------------------------------------------------
 
+ARG PHP_UPSTREAM=php-fpm
 ARG PHP_UPSTREAM_CONTAINER=php-fpm
 ARG PHP_UPSTREAM_PORT=9000
 
