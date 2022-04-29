@@ -31,8 +31,8 @@ if [[ "$(uname)" == "Darwin" ]]; then
         done
     fi
 
-    # Add .crb and .local to the dnsmasq config
     # shellcheck disable=SC2129
+    # Add IETF RFC 2606 local TLD list to the dnsmasq config
     echo 'address=/.localhost/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
     echo 'address=/.test/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
     echo 'address=/.invalid/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
@@ -51,7 +51,7 @@ if [[ "$(uname)" == "Darwin" ]]; then
         sudo mkdir -v /etc/resolver
     fi
 
-    # Create .crb and .local resolver files
+    # Create IETF RFC 2606 local TLD resolver files
     sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/localhost'
     sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
     sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/invalid'
