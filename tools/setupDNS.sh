@@ -32,8 +32,12 @@ if [[ "$(uname)" == "Darwin" ]]; then
     fi
 
     # Add .crb and .local to the dnsmasq config
-    echo 'address=/.crb/127.0.0.1' > "$(brew --prefix)/etc/dnsmasq.conf"
-    echo 'address=/.local/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
+    # shellcheck disable=SC2129
+    echo 'address=/.localhost/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
+    echo 'address=/.test/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
+    echo 'address=/.invalid/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
+    echo 'address=/.example/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
+
 
     if ! [[ -f '/Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist' ]]; then
         # Copy the daemon configuration file into place.
@@ -48,8 +52,10 @@ if [[ "$(uname)" == "Darwin" ]]; then
     fi
 
     # Create .crb and .local resolver files
-    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/crb'
-    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/local'
+    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/localhost'
+    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/test'
+    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/invalid'
+    sudo bash -c 'echo "nameserver 127.0.0.1" > /etc/resolver/example'
 
     # Make sure dnsmasq is started
     sudo launchctl start homebrew.mxcl.dnsmasq
