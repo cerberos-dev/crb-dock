@@ -1,17 +1,19 @@
-#server block for port 80 / non-HTTPS traffic.
-#redirect to HTTPS
+# Redirect clients from HTTP to HTTPS
 server {
+    # HTTP
     listen 80;
     listen [::]:80;
 
+    # Server settings
     server_name sample.localhost;
 
+    # Redirect to HTTPS
     return 301 https://$server_name$request_uri;
 }
 
-#server block for port 443 / HTTPS traffic.
+# HTTPS clients
 server {
-    # For https
+    # HTTPS
     listen 443 ssl;
     listen [::]:443 ssl;
 
@@ -21,14 +23,15 @@ server {
 
     # Server settings
     server_name sample.localhost;
-    # server_name sample.localhost;
-    root /var/www/sample/;
+    root /var/www/sample;
     index index.php index.html index.htm;
 
+    # Try to find all files after URI
     location / {
         try_files $uri $uri/ /index.php$is_args$args;
     }
 
+    # Send all request for .php files to php fastcgi
     location ~ \.php$ {
         try_files $uri /index.php =404;
 
@@ -39,16 +42,12 @@ server {
         include fastcgi_params;
     }
 
+    # Deny access to all files starting with .ht
     location ~ /\.ht {
         deny all;
     }
 
-    location /.well-known/acme-challenge/ {
-        root /var/www/letsencrypt/;
-
-        log_not_found off;
-    }
-
-    error_log /var/log/nginx/error/sample.crb.log;
-    access_log /var/log/nginx/access/sample.crb.log;
+    # Logging
+    error_log /var/log/nginx/error/$server_name.log;
+    access_log /var/log/nginx/access/$server_name.log;
 }
