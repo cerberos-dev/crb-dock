@@ -38,7 +38,6 @@ if [[ "$(uname)" == "Darwin" ]]; then
     echo 'address=/.invalid/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
     echo 'address=/.example/127.0.0.1' >> "$(brew --prefix)/etc/dnsmasq.conf"
 
-
     if ! [[ -f '/Library/LaunchDaemons/homebrew.mxcl.dnsmasq.plist' ]]; then
         # Copy the daemon configuration file into place.
         sudo cp -v "$(brew --prefix dnsmasq)/homebrew.mxcl.dnsmasq.plist" /Library/LaunchDaemons
