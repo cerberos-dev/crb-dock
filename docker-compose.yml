@@ -54,7 +54,7 @@ services:
       dockerfile: "Dockerfile-${PHP_VERSION}"
     volumes:
       - ${APPLICATION}:${APPLICATION_LOCATION}
-      - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+      - ${PHP_FPM_PATH}${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
     expose:
       - "9000"
       - "9001"
