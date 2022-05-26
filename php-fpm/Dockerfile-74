@@ -250,8 +250,6 @@ RUN if [ ${INSTALL_CALENDAR} = true ]; then \
 
 ADD ./docker.pool.conf /usr/local/etc/php-fpm.d/
 
-#RUN rm -r /var/lib/apt/lists/*
-
 RUN usermod -u 1000 www-data
 
 WORKDIR /var/www
