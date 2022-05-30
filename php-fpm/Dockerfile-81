@@ -2,7 +2,7 @@
 # Image Setup
 # --------------------------------------------------------------------------
 
-FROM php:8.1-fpm
+FROM php:8.1.6-fpm-buster
 
 LABEL key="Cerberos <development@cerberos.dev>"
 
