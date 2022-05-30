@@ -2,7 +2,7 @@
 # Image Setup
 # --------------------------------------------------------------------------
 
-FROM phusion/baseimage:bionic-1.0.0
+FROM phusion/baseimage:jammy-1.0.0
 
 LABEL key="Cerberos <development@cerberos.dev>"
 
@@ -32,11 +32,6 @@ RUN apt-get update && \
         libedit-dev \
         libxml2-dev \
         xz-utils \
-        libsqlite3-dev \
-        sqlite3 \
-        git \
-        vim \
-        nano \
     && apt-get clean
 
 
