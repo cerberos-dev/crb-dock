@@ -2,7 +2,7 @@
 # Image Setup
 # --------------------------------------------------------------------------
 
-FROM mariadb:latest
+FROM linuxserver/mariadb 
 
 LABEL key="Cerberos <development@cerberos.dev>"
 
