@@ -215,7 +215,12 @@ RUN if [ ${INSTALL_LDAP} = true ]; then \
 
 ARG INSTALL_IONCUBE=false
 RUN if [ ${INSTALL_IONCUBE} = true ]; then \
-    echo "IonCube doest not support PHP 8.0 or higher."\
+cd /tmp \
+    && curl -o ioncube.tar.gz http://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
+    && tar -xvzf ioncube.tar.gz \
+    && mv ioncube/ioncube_loader_lin_8.1.so /usr/local/lib/php/extensions/no-debug-non-zts-20190902/ioncube_loader_lin_8.1.so \
+    && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20190902/ioncube_loader_lin_8.1.so" > /usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_8.1.ini \
+    && rm -Rf ioncube.tar.gz ioncube \
 ;fi
 
 # --------------------------------------------------------------------------
