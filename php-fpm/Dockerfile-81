@@ -23,10 +23,6 @@ RUN apt-get update && \
         libmcrypt-dev \
         libzip-dev
 
-# Install the PHP mcrypt extention \
-# @ToDo: mcrypt is no longer supported in PHP 8.1
-# RUN pecl install encryption-mcrypt-1.0.4
-
 # Install the PHP pdo_mysql extention
 RUN docker-php-ext-install pdo_mysql
 
@@ -54,20 +50,6 @@ RUN if [ ${INSTALL_SOAP} = true ]; then \
     apt-get -y install libxml2-dev php-soap && \
     docker-php-ext-install soap \
 ;fi
-
-# --------------------------------------------------------------------------
-# xDebug:
-# --------------------------------------------------------------------------
-
-ARG INSTALL_XDEBUG=false
-RUN if [ ${INSTALL_XDEBUG} = true ]; then \
-    # Install the xdebug extension
-    pecl install xdebug && \
-    docker-php-ext-enable xdebug \
-;fi
-
-# Copy xdebug configuration for remote debugging
-COPY ./xdebug.ini /usr/local/etc/php/conf.d/xdebug.ini
 
 # --------------------------------------------------------------------------
 # PHP REDIS EXTENSION:
@@ -230,7 +212,7 @@ cd /tmp \
 ARG INSTALL_WKHTMLTOPDF=false
 RUN if [ ${INSTALL_WKHTMLTOPDF} = true ]; then \
 cd /tmp \
-    && curl -Lo wkhtmltopdf.deb https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.stretch_amd64.deb \
+    && curl -Lo wkhtmltopdf.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.stretch_amd64.deb \
     && apt-get install -y ./wkhtmltopdf.deb \
     && rm -f wkhtmltopdf.deb \
     && apt-get install -y xvfb \
