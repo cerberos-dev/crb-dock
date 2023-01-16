@@ -1,0 +1,237 @@
+# --------------------------------------------------------------------------
+# Image Setup
+# --------------------------------------------------------------------------
+
+FROM php:8.2-fpm
+
+LABEL key="Cerberos <development@cerberos.dev>"
+
+# --------------------------------------------------------------------------
+# Mandatory Software's Installation
+# --------------------------------------------------------------------------
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        curl \
+        libmemcached-dev \
+        libz-dev \
+        libpq-dev \
+        libjpeg-dev \
+        libpng-dev \
+        libfreetype6-dev \
+        libssl-dev \
+        libmcrypt-dev \
+        libzip-dev
+
+# Install the PHP pdo_mysql extention
+RUN docker-php-ext-install pdo_mysql
+
+# Install the PHP pdo_pgsql extention
+RUN docker-php-ext-install pdo_pgsql
+
+
+# --------------------------------------------------------------------------
+# Optional Software's Installation
+#
+# Optional Software's will only be installed if you set them to `true`
+# in the `docker-compose.yml` before the build.
+# --------------------------------------------------------------------------
+
+
+# --------------------------------------------------------------------------
+# SOAP:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_SOAP=false
+RUN if [ ${INSTALL_SOAP} = true ]; then \
+    # Install the soap extension
+    rm /etc/apt/preferences.d/no-debian-php && \
+    apt-get update -yqq && \
+    apt-get -y install libxml2-dev php-soap && \
+    docker-php-ext-install soap \
+;fi
+
+# --------------------------------------------------------------------------
+# PHP REDIS EXTENSION:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_PHPREDIS=false
+RUN if [ ${INSTALL_PHPREDIS} = true ]; then \
+    # Install Php Redis Extension
+    pecl install -o -f redis \
+    && rm -rf /tmp/pear \
+    && docker-php-ext-enable redis \
+;fi
+
+# --------------------------------------------------------------------------
+# Swoole EXTENSION FOR PHP 7
+# --------------------------------------------------------------------------
+
+ARG INSTALL_SWOOLE=false
+RUN if [ ${INSTALL_SWOOLE} = true ]; then \
+    # Install Php Swoole Extension
+    pecl install swoole \
+    && docker-php-ext-enable swoole \
+;fi
+
+# --------------------------------------------------------------------------
+# ZipArchive:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_ZIP_ARCHIVE=false
+RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
+    # Install the zip extension
+    docker-php-ext-install zip \
+;fi
+
+# --------------------------------------------------------------------------
+# bcmath:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_BCMATH=false
+RUN if [ ${INSTALL_BCMATH} = true ]; then \
+    # Install the bcmath extension
+    docker-php-ext-install bcmath \
+;fi
+
+# --------------------------------------------------------------------------
+# PHP Memcached:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_MEMCACHED=false
+RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
+    # Install the php memcached extension
+    curl -L -o /tmp/memcached.tar.gz "https://github.com/php-memcached-dev/php-memcached/archive/v3.1.5.tar.gz" \
+    && mkdir -p memcached \
+    && tar -C memcached -zxvf /tmp/memcached.tar.gz --strip 1 \
+    && ( \
+        cd memcached \
+        && phpize \
+        && ./configure \
+        && make -j$(nproc) \
+        && make install \
+    ) \
+    && rm -r memcached \
+    && rm /tmp/memcached.tar.gz \
+    && docker-php-ext-enable memcached \
+;fi
+
+# --------------------------------------------------------------------------
+# Exif:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_EXIF=false
+RUN if [ ${INSTALL_EXIF} = true ]; then \
+    # Enable Exif PHP extensions requirements
+    docker-php-ext-install exif \
+;fi
+
+# --------------------------------------------------------------------------
+# GD:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_GD=false
+RUN if [ ${INSTALL_GD} = true ]; then \
+    # Enable GD PHP extensions requirements
+    docker-php-ext-install gd \
+;fi
+
+# --------------------------------------------------------------------------
+# Opcache:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_OPCACHE=false
+RUN if [ ${INSTALL_OPCACHE} = true ]; then \
+    docker-php-ext-install opcache \
+;fi
+
+# Copy opcache configuration
+COPY ./opcache.ini /usr/local/etc/php/conf.d/opcache.ini
+
+# --------------------------------------------------------------------------
+# Mysqli:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_MYSQLI=false
+RUN if [ ${INSTALL_MYSQLI} = true ]; then \
+    docker-php-ext-install mysqli \
+;fi
+
+# --------------------------------------------------------------------------
+# Tokenizer:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_TOKENIZER=false
+RUN if [ ${INSTALL_TOKENIZER} = true ]; then \
+    echo "Tokenizer is already supported in PHP 8.1 or higher."\
+;fi
+
+# --------------------------------------------------------------------------
+# Human Language and Character Encoding Support:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_INTL=false
+RUN if [ ${INSTALL_INTL} = true ]; then \
+    # Install intl and requirements
+    apt-get update -yqq && \
+    apt-get install -y zlib1g-dev libicu-dev g++ && \
+    docker-php-ext-configure intl && \
+    docker-php-ext-install intl \
+;fi
+
+# --------------------------------------------------------------------------
+# LDAP:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_LDAP=false
+RUN if [ ${INSTALL_LDAP} = true ]; then \
+    apt-get update -yqq && \
+    apt-get install -y libldap2-dev && \
+    docker-php-ext-configure ldap --with-libdir=lib/x86_64-linux-gnu/ && \
+    docker-php-ext-install ldap \
+;fi
+
+# --------------------------------------------------------------------------
+# IonCube:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_IONCUBE=false
+RUN if [ ${INSTALL_IONCUBE} = true ]; then \
+    echo "IonCube doest not support PHP 8.2 (yet)."\
+;fi
+
+# --------------------------------------------------------------------------
+# WKHtmlToPDF:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_WKHTMLTOPDF=false
+RUN if [ ${INSTALL_WKHTMLTOPDF} = true ]; then \
+cd /tmp \
+    && curl -Lo wkhtmltopdf.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.stretch_amd64.deb \
+    && apt-get install -y ./wkhtmltopdf.deb \
+    && rm -f wkhtmltopdf.deb \
+    && apt-get install -y xvfb \
+;fi
+
+# --------------------------------------------------------------------------
+# Calendar:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_CALENDAR=false
+RUN if [ ${INSTALL_CALENDAR} = true ]; then \
+    docker-php-ext-install calendar \
+;fi
+
+# --------------------------------------------------------------------------
+# Final Touch
+# --------------------------------------------------------------------------
+
+ADD ./docker.pool.conf /usr/local/etc/php-fpm.d/
+
+RUN usermod -u 1000 www-data
+
+WORKDIR /var/www
+
+CMD ["php-fpm"]
+
+EXPOSE 9000
