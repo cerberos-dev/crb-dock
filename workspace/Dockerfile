@@ -4,7 +4,7 @@
 
 FROM phusion/baseimage:jammy-1.0.0
 
-LABEL key="Cerberos <development@cerberos.dev>"
+LABEL maintainer="Cerberos <development@cerberos.dev>"
 
 # --------------------------------------------------------------------------
 # Mandatory Software's Installation
