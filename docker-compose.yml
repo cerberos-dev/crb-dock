@@ -61,6 +61,22 @@ services:
     networks:
       - internal
 
+
+  # --------------------------------------------------------------------------
+  # Redis Server Container
+  # --------------------------------------------------------------------------
+
+  redis:
+    container_name: crb_dock_redis
+    build:
+      context: ./redis
+    volumes:
+      - ${DATA_SAVE_PATH}/redis:/data
+    ports:
+      - "${REDIS_PORT}:6379"
+    networks:
+      - internal
+
   # --------------------------------------------------------------------------
   # Nginx Server Container
   # --------------------------------------------------------------------------
