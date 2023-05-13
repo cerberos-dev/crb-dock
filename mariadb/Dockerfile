@@ -4,7 +4,7 @@
 
 FROM mariadb:latest
 
-LABEL key="Cerberos <development@cerberos.dev>"
+LABEL maintainer="Cerberos <development@cerberos.dev>"
 
 # --------------------------------------------------------------------------
 # Final Touch

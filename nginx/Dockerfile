@@ -4,7 +4,7 @@
 
 FROM nginx:alpine
 
-LABEL key="Cerberos <development@cerberos.dev>"
+LABEL maintainer="Cerberos <development@cerberos.dev>"
 
 # --------------------------------------------------------------------------
 # Mandatory Software's Installation
