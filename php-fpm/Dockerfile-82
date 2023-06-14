@@ -207,7 +207,7 @@ RUN if [ ${INSTALL_IONCUBE} = true ]; then \
 ARG INSTALL_WKHTMLTOPDF=false
 RUN if [ ${INSTALL_WKHTMLTOPDF} = true ]; then \
 cd /tmp \
-    && curl -Lo wkhtmltopdf.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.stretch_amd64.deb \
+    && curl -Lo wkhtmltopdf.deb https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6.1-3/wkhtmltox_0.12.6.1-3.bookworm_amd64.deb \
     && apt-get install -y ./wkhtmltopdf.deb \
     && rm -f wkhtmltopdf.deb \
     && apt-get install -y xvfb \
