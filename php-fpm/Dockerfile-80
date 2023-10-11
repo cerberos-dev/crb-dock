@@ -120,6 +120,19 @@ RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
 ;fi
 
 # --------------------------------------------------------------------------
+# Imagick:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_IMAGICK=false
+RUN if [ ${INSTALL_IMAGICK} = true ]; then \
+    # Install the imagick extension
+    apt-get update && \
+    apt-get install -y libmagickwand-dev && \
+    pecl install imagick && \
+    docker-php-ext-enable imagick \
+;fi
+
+# --------------------------------------------------------------------------
 # Exif:
 # --------------------------------------------------------------------------
 
