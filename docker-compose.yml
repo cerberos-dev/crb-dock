@@ -11,6 +11,7 @@ services:
       args:
         - PGID=${WORKSPACE_PGID}
         - PUID=${WORKSPACE_PUID}
+        - INSTALL_CARGO=${WORKSPACE_INSTALL_CARGO}
         - TZ=${WORKSPACE_TIMEZONE}
     volumes:
       - ${APPLICATION}:${APPLICATION_LOCATION}
