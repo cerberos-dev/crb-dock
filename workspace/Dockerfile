@@ -21,17 +21,17 @@ ENV TERM xterm
 
 RUN apt-get update && \
     apt-get install -y --allow-downgrades --allow-remove-essential \
-        --allow-change-held-packages \
-        wget \
-        curl \
-        build-essential \
-        nghttp2 \
-        libnghttp2-dev \
-        libssl-dev \
-        pkg-config \
-        libedit-dev \
-        libxml2-dev \
-        xz-utils \
+    --allow-change-held-packages \
+    wget \
+    curl \
+    build-essential \
+    nghttp2 \
+    libnghttp2-dev \
+    libssl-dev \
+    pkg-config \
+    libedit-dev \
+    libxml2-dev \
+    xz-utils \
     && apt-get clean
 
 
@@ -39,6 +39,15 @@ RUN apt-get update && \
 # Optional Software's Installation
 # --------------------------------------------------------------------------
 
+# --------------------------------------------------------------------------
+# Cargo
+# --------------------------------------------------------------------------
+
+ARG INSTALL_CARGO=false
+
+RUN if [ ${INSTALL_CARGO} = true ]; then \
+    curl https://sh.rustup.rs -sSf | sh -s -- -y\
+    ;fi
 
 # --------------------------------------------------------------------------
 # Non-Root User: Add a non-root user to prevent files being created with root permissions on host machine.
@@ -80,17 +89,17 @@ COPY ./aliases.sh /home/crbdock/aliases.sh
 RUN echo "" >> ~/.bashrc && \
     echo "# Load Custom Aliases" >> ~/.bashrc && \
     echo "source /home/crbdock/aliases.sh" >> ~/.bashrc && \
-	echo "" >> ~/.bashrc && \
-	sed -i 's/\r//' /home/crbdock/aliases.sh && \
-	sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/crbdock/aliases.sh
+    echo "" >> ~/.bashrc && \
+    sed -i 's/\r//' /home/crbdock/aliases.sh && \
+    sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/crbdock/aliases.sh
 
 USER root
 RUN echo "" >> ~/.bashrc && \
     echo "# Load Custom Aliases" >> ~/.bashrc && \
     echo "source /home/crbdock/aliases.sh" >> ~/.bashrc && \
-	echo "" >> ~/.bashrc && \
-	sed -i 's/\r//' /home/crbdock/aliases.sh && \
-	sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/crbdock/aliases.sh
+    echo "" >> ~/.bashrc && \
+    sed -i 's/\r//' /home/crbdock/aliases.sh && \
+    sed -i 's/^#! \/bin\/sh/#! \/bin\/bash/' /home/crbdock/aliases.sh
 
 # --------------------------------------------------------------------------
 # Final Touch
