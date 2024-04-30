@@ -11,14 +11,17 @@ services:
       args:
         - PGID=${WORKSPACE_PGID}
         - PUID=${WORKSPACE_PUID}
-        - INSTALL_CARGO=${WORKSPACE_INSTALL_CARGO}
         - TZ=${WORKSPACE_TIMEZONE}
+        - INSTALL_CARGO=${WORKSPACE_INSTALL_CARGO}
+        - http_proxy
+        - https_proxy
+        - no_proxy
     volumes:
       - ${APPLICATION}:${APPLICATION_LOCATION}
     extra_hosts:
-      - "dockerhost:${DOCKER_HOST_IP}"    
-    tty: true    
-    networks:      
+      - "dockerhost:${DOCKER_HOST_IP}"
+    tty: true
+    networks:
       - internal
 
   # --------------------------------------------------------------------------
@@ -26,7 +29,7 @@ services:
   # --------------------------------------------------------------------------
 
   php-fpm:
-    container_name: crb_dock_php-fpm
+    container_name: crb_dock_php
     build:
       context: ./php-fpm
       args:
@@ -36,7 +39,7 @@ services:
         - INSTALL_GD=${PHP_FPM_INSTALL_GD}
         - INSTALL_IMAGICK=${PHP_FPM_INSTALL_IMAGICK}
         - INSTALL_INTL=${PHP_FPM_INSTALL_INTL}
-        - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE} # IonCube is not support when using PHP 8.0
+        - INSTALL_IONCUBE=${PHP_FPM_INSTALL_IONCUBE}
         - INSTALL_LDAP=${PHP_FPM_INSTALL_LDAP}
         - INSTALL_MEMCACHED=${PHP_FPM_INSTALL_MEMCACHED}
         - INSTALL_MYSQLI=${PHP_FPM_INSTALL_MYSQLI}
@@ -44,9 +47,12 @@ services:
         - INSTALL_PHPREDIS=${PHP_FPM_INSTALL_PHPREDIS}
         - INSTALL_SOAP=${PHP_FPM_INSTALL_SOAP}
         - INSTALL_SWOOLE=${PHP_FPM_INSTALL_SWOOLE}
-        - INSTALL_TOKENIZER=${PHP_FPM_INSTALL_TOKENIZER} # Tokenizer is already included in image when using PHP 8.1
+        - INSTALL_TOKENIZER=${PHP_FPM_INSTALL_TOKENIZER}
         - INSTALL_WKHTMLTOPDF=${PHP_FPM_INSTALL_WKHTMLTOPDF}
         - INSTALL_ZIP_ARCHIVE=${PHP_FPM_INSTALL_ZIP_ARCHIVE}
+        - http_proxy
+        - https_proxy
+        - no_proxy
       dockerfile: "Dockerfile-${PHP_VERSION}"
     volumes:
       - ${APPLICATION}:${APPLICATION_LOCATION}
@@ -69,6 +75,10 @@ services:
     container_name: crb_dock_redis
     build:
       context: ./redis
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
     volumes:
       - ${DATA_SAVE_PATH}/redis:/data
     ports:
@@ -84,6 +94,10 @@ services:
     container_name: crb_dock_nginx
     build:
       context: ./nginx
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
     volumes:
       - ${APPLICATION}:${APPLICATION_LOCATION}
       - ${NGINX_HOST_LOG_PATH}:/var/log/nginx
@@ -103,8 +117,14 @@ services:
 
   mariadb:
     container_name: crb_dock_mariadb
-    build: ./mariadb
+    build:
+      context: ./mariadb
+      args:
+        - http_proxy
+        - https_proxy
+        - no_proxy
     environment:
+      - TZ=${WORKSPACE_TIMEZONE}
       - MYSQL_DATABASE=${MARIADB_DATABASE}
       - MYSQL_USER=${MARIADB_USER}
       - MYSQL_PASSWORD=${MARIADB_PASSWORD}
@@ -133,13 +153,13 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ${DATA_SAVE_PATH}/portainer:/data
-    networks:      
+    networks:
       - internal
 
 # --------------------------------------------------------------------------
 # Networks Setup
 # --------------------------------------------------------------------------
 
-networks:  
+networks:
   internal:
     driver: "bridge"
