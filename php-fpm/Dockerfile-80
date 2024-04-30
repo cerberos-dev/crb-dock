@@ -11,7 +11,8 @@ LABEL maintainer="Cerberos <development@cerberos.dev>"
 # --------------------------------------------------------------------------
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
+        --no-install-recommends \
         curl \
         libmemcached-dev \
         libz-dev \
@@ -24,7 +25,7 @@ RUN apt-get update && \
         libzip-dev
 
 # Install the PHP mcrypt extention
-RUN pecl install mcrypt-1.0.4
+RUN pecl install mcrypt-1.0.7
 
 # Install the PHP pdo_mysql extention
 RUN docker-php-ext-install pdo_mysql
@@ -242,7 +243,7 @@ RUN if [ ${INSTALL_CALENDAR} = true ]; then \
 # Final Touch
 # --------------------------------------------------------------------------
 
-ADD ./docker.pool.conf /usr/local/etc/php-fpm.d/
+COPY ./docker.pool.conf /usr/local/etc/php-fpm.d/
 
 RUN usermod -u 1000 www-data
 
