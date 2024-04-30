@@ -11,7 +11,8 @@ LABEL maintainer="Cerberos <development@cerberos.dev>"
 # --------------------------------------------------------------------------
 
 RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
+    apt-get install -y \
+        --no-install-recommends \
         curl \
         libmemcached-dev \
         libz-dev \
@@ -22,6 +23,9 @@ RUN apt-get update && \
         libssl-dev \
         libmcrypt-dev \
         libzip-dev
+
+# Install the PHP mcrypt extention
+RUN pecl install mcrypt-1.0.7
 
 # Install the PHP pdo_mysql extention
 RUN docker-php-ext-install pdo_mysql
@@ -214,7 +218,7 @@ RUN if [ ${INSTALL_LDAP} = true ]; then \
 ARG INSTALL_IONCUBE=false
 RUN if [ ${INSTALL_IONCUBE} = true ]; then \
 cd /tmp \
-    && curl -o ioncube.tar.gz http://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
+    && curl -o ioncube.tar.gz https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz \
     && tar -xvzf ioncube.tar.gz \
     && mv ioncube/ioncube_loader_lin_8.1.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/ioncube_loader_lin_8.1.so \
     && echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20210902/ioncube_loader_lin_8.1.so" > /usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_8.1.ini \
@@ -247,7 +251,7 @@ RUN if [ ${INSTALL_CALENDAR} = true ]; then \
 # Final Touch
 # --------------------------------------------------------------------------
 
-ADD ./docker.pool.conf /usr/local/etc/php-fpm.d/
+COPY ./docker.pool.conf /usr/local/etc/php-fpm.d/
 
 RUN usermod -u 1000 www-data
 
