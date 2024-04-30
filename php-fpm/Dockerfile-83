@@ -214,7 +214,7 @@ RUN if [ ${INSTALL_LDAP} = true ]; then \
 
 ARG INSTALL_IONCUBE=false
 RUN if [ ${INSTALL_IONCUBE} = true ]; then \
-    echo "IonCube doest not support PHP 8.2 (yet)."\
+    echo "IonCube doest not support PHP 8.3 (yet)."\
 ;fi
 
 # --------------------------------------------------------------------------
