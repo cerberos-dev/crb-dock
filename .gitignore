@@ -1,34 +1,5 @@
-# IDE files and folders
-nbproject/
-.~lock.*
-.buildpath
-.idea
-.project
-.settings
-*.sublime-project
-*.sublime-workspace
-
-# Other files
-.env
-*.log
-*.sqlite
-*.sql
-
-# OS generated files
-.DS_Store
-.DS_Store?
-._*
-.Spotlight-V100
-.Trashes
-ehthumbs.db
-Thumbs.db
-*.swp
-
-# Other Folders
-/logs
-/data
-
-# Compiled source
+# Compiled source #
+###################
 *.com
 *.class
 *.dll
@@ -36,7 +7,8 @@ Thumbs.db
 *.o
 *.so
 
-# Packages
+# Packages #
+############
 *.7z
 *.dmg
 *.gz
@@ -46,7 +18,77 @@ Thumbs.db
 *.tar
 *.zip
 
-# SSL files
+# Logs and databases #
+######################
+*.log
+*.sqlite
+
+# OS generated files #
+######################
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*.swp
+
+# GULP generated files #
+########################
+*.js.map
+*.css.map
+
+# IDE files #
+#############
+nbproject/
+.~lock.*
+.buildpath
+.idea
+.project
+.settings
+*.sublime-project
+*.sublime-workspace
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+.phpunit.result.cache
+.phpunit.cache
+.phpactor.json
+
+# Dependencies #
+################
+/bower_components/
+/node_modules/
+/vendor/
+npm-debug.log
+yarn-error.log
+
+# Config files #
+################
+auth.json
+.env
+.env.encrypted
+
+# Laravel folders and files #
+#############################
+/public/build
+/public/css
+/public/favicon
+/public/fonts
+/public/hot
+/public/images
+/public/js
+/public/mix-manifest.json
+/public/storage
+/public/svg
+/storage/debugbar
+
+# Project folders and files #
+#############################
+/logs
+/data
 *.crt
 *.key
 *.csr
+
