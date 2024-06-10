@@ -45,11 +45,20 @@ RUN apt-get update && \
 
 
 # --------------------------------------------------------------------------
+# SSH:
+# --------------------------------------------------------------------------
+
+ARG INSTALL_SSH=false
+RUN if [ ${INSTALL_SSH} = true ]; then \
+    apt-get update -yqq && \
+    apt-get -y install ssh \
+;fi
+
+# --------------------------------------------------------------------------
 # Cargo
 # --------------------------------------------------------------------------
 
 ARG INSTALL_CARGO=false
-
 RUN if [ ${INSTALL_CARGO} = true ]; then \
     curl https://sh.rustup.rs -sSf | sh -s -- -y \
 ;fi
