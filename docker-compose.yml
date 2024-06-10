@@ -13,6 +13,7 @@ services:
         - PUID=${WORKSPACE_PUID}
         - TZ=${WORKSPACE_TIMEZONE}
         - INSTALL_CARGO=${WORKSPACE_INSTALL_CARGO}
+        - INSTALL_SSH=${WORKSPACE_INSTALL_SSH}
         - http_proxy
         - https_proxy
         - no_proxy
@@ -50,6 +51,7 @@ services:
         - INSTALL_TOKENIZER=${PHP_FPM_INSTALL_TOKENIZER}
         - INSTALL_WKHTMLTOPDF=${PHP_FPM_INSTALL_WKHTMLTOPDF}
         - INSTALL_ZIP_ARCHIVE=${PHP_FPM_INSTALL_ZIP_ARCHIVE}
+        - INSTALL_SSH=${PHP_INSTALL_SSH}
         - http_proxy
         - https_proxy
         - no_proxy
