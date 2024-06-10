@@ -24,15 +24,15 @@ RUN apt-get update && \
         --allow-downgrades \
         --allow-remove-essential \
         --allow-change-held-packages \
-        wget \
-        curl \
         build-essential \
-        nghttp2 \
+        curl \
+        libedit-dev \
         libnghttp2-dev \
         libssl-dev \
-        pkg-config \
-        libedit-dev \
         libxml2-dev \
+        nghttp2 \
+        pkg-config \
+        wget \
         xz-utils
 
 
