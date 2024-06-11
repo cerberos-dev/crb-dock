@@ -48,8 +48,8 @@ RUN docker-php-ext-install pdo_pgsql
 
 ARG INSTALL_SSH=false
 RUN if [ ${INSTALL_SSH} = true ]; then \
-    apt-get update -yqq && \
-    apt-get -y install ssh \
+    apt-get update && \
+    apt-get install -y ssh \
 ;fi
 
 # --------------------------------------------------------------------------
