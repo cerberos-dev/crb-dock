@@ -45,13 +45,13 @@ RUN apt-get update && \
 
 
 # --------------------------------------------------------------------------
-# SSH:
+# SSH
 # --------------------------------------------------------------------------
 
 ARG INSTALL_SSH=false
 RUN if [ ${INSTALL_SSH} = true ]; then \
-    apt-get update -yqq && \
-    apt-get -y install ssh \
+    apt-get update && \
+    apt-get install -y ssh \
 ;fi
 
 # --------------------------------------------------------------------------
