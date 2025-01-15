@@ -136,11 +136,7 @@ RUN if [ ${INSTALL_MEMCACHED} = true ]; then \
 
 ARG INSTALL_IMAGICK=false
 RUN if [ ${INSTALL_IMAGICK} = true ]; then \
-    # Install the imagick extension
-    apt-get update && \
-    apt-get install -y libmagickwand-dev && \
-    pecl install imagick && \
-    docker-php-ext-enable imagick \
+    echo "Imagick doest not support PHP 8.4 (yet)."\
 ;fi
 
 # --------------------------------------------------------------------------
@@ -224,7 +220,7 @@ RUN if [ ${INSTALL_LDAP} = true ]; then \
 
 ARG INSTALL_IONCUBE=false
 RUN if [ ${INSTALL_IONCUBE} = true ]; then \
-    echo "IonCube doest not support PHP 8.3 (yet)."\
+    echo "IonCube doest not support PHP 8.4 (yet)."\
 ;fi
 
 # --------------------------------------------------------------------------
