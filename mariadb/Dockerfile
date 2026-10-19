@@ -2,7 +2,7 @@
 # Image Setup
 # --------------------------------------------------------------------------
 
-FROM mariadb:latest
+FROM mariadb:11.4
 
 LABEL maintainer="Cerberos <development@cerberos.dev>"
 

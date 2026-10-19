@@ -2,7 +2,7 @@
 # Image Setup
 # --------------------------------------------------------------------------
 
-FROM nginx:alpine
+FROM nginx:1.27-alpine
 
 LABEL maintainer="Cerberos <development@cerberos.dev>"
 

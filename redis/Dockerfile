@@ -1,4 +1,4 @@
-FROM redis:latest
+FROM redis:7.4
 
 LABEL maintainer="Cerberos <development@cerberos.dev>"
 
