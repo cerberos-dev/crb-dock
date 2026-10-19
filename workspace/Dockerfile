@@ -10,30 +10,31 @@ LABEL maintainer="Cerberos <development@cerberos.dev>"
 # Mandatory Software's Installation
 # --------------------------------------------------------------------------
 
-RUN DEBIAN_FRONTEND=noninteractive
-RUN locale-gen en_US.UTF-8
-
+ENV DEBIAN_FRONTEND=noninteractive
 ENV LANGUAGE=en_US.UTF-8
 ENV LC_ALL=en_US.UTF-8
 ENV LC_CTYPE=en_US.UTF-8
 ENV LANG=en_US.UTF-8
-ENV TERM xterm
+ENV TERM=xterm
 
-RUN apt-get update && \
-    apt-get install -y \
-        --allow-downgrades \
-        --allow-remove-essential \
-        --allow-change-held-packages \
+RUN apt-get update -yqq && \
+    apt-get install -y --no-install-recommends \
         build-essential \
+        ca-certificates \
         curl \
         libedit-dev \
         libnghttp2-dev \
         libssl-dev \
         libxml2-dev \
+        locales \
         nghttp2 \
         pkg-config \
         wget \
-        xz-utils
+        xz-utils && \
+    locale-gen en_US.UTF-8 && \
+    update-locale LANG=en_US.UTF-8 && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
 # --------------------------------------------------------------------------
@@ -49,9 +50,11 @@ RUN apt-get update && \
 # --------------------------------------------------------------------------
 
 ARG INSTALL_SSH=false
-RUN if [ ${INSTALL_SSH} = true ]; then \
-    apt-get update && \
-    apt-get install -y ssh \
+RUN if [ "${INSTALL_SSH}" = true ]; then \
+    apt-get update -yqq && \
+    apt-get install -y --no-install-recommends ssh && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
 ;fi
 
 # --------------------------------------------------------------------------
@@ -59,8 +62,12 @@ RUN if [ ${INSTALL_SSH} = true ]; then \
 # --------------------------------------------------------------------------
 
 ARG INSTALL_CARGO=false
-RUN if [ ${INSTALL_CARGO} = true ]; then \
-    curl https://sh.rustup.rs -sSf | sh -s -- -y \
+RUN if [ "${INSTALL_CARGO}" = true ]; then \
+    apt-get update -yqq && \
+    apt-get install -y --no-install-recommends gcc && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* && \
+    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y \
 ;fi
 
 # --------------------------------------------------------------------------
@@ -70,20 +77,19 @@ RUN if [ ${INSTALL_CARGO} = true ]; then \
 ARG PUID=1000
 ARG PGID=1000
 
-ENV PUID ${PUID}
-ENV PGID ${PGID}
+ENV PUID=${PUID}
+ENV PGID=${PGID}
 
 RUN groupadd -g ${PGID} crbdock && \
-    useradd -u ${PUID} -g crbdock -m crbdock && \
-    apt-get update -yqq
+    useradd -u ${PUID} -g crbdock -m crbdock
 
 # --------------------------------------------------------------------------
 # Set Timezone
 # --------------------------------------------------------------------------
 
 ARG TZ=UTC
-ENV TZ ${TZ}
-RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ENV TZ=${TZ}
+RUN ln -snf /usr/share/zoneinfo/${TZ} /etc/localtime && echo ${TZ} > /etc/timezone
 
 # --------------------------------------------------------------------------
 # Crontab
@@ -118,11 +124,6 @@ RUN echo "" >> ~/.bashrc && \
 # --------------------------------------------------------------------------
 # Final Touch
 # --------------------------------------------------------------------------
-
-# Clean up
-USER root
-RUN apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Set default work directory
 WORKDIR /var/www
