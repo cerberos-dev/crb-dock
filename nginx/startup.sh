@@ -1,6 +1,13 @@
 #!/bin/bash
+set -euo pipefail
 
-if [ ! -f /etc/nginx/ssl/crb-dock.crt ]; then
+SSL_DIR="/etc/nginx/ssl"
+CERT_FILE="${SSL_DIR}/crb-dock.crt"
+KEY_FILE="${SSL_DIR}/crb-dock.key"
+
+if [ ! -f "${CERT_FILE}" ]; then
+    mkdir -p "${SSL_DIR}"
+
     openssl req -new \
         -newkey rsa:4096 \
         -x509 \
@@ -8,10 +15,11 @@ if [ ! -f /etc/nginx/ssl/crb-dock.crt ]; then
         -days 365 \
         -nodes \
         -subj "/CN=CRB-Dock/O=Cerberos/C=NL" \
-        -out '/etc/nginx/ssl/crb-dock.crt' \
-        -keyout '/etc/nginx/ssl/crb-dock.key'
+        -addext "subjectAltName=DNS:crb-dock.localhost,DNS:crb-dock.local,DNS:crb-dock.crb,DNS:localhost,IP:127.0.0.1" \
+        -out "${CERT_FILE}" \
+        -keyout "${KEY_FILE}"
 
-    chmod 644 /etc/nginx/ssl/crb-dock.key
+    chmod 600 "${KEY_FILE}"
 fi
 
 # Start crond in background
