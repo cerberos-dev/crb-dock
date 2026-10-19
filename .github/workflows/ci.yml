@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Lint shell scripts
+        uses: ludeeus/action-shellcheck@2.0.0
+        with:
+          severity: warning
+
+      - name: Prepare environment file
+        run: cp .env.example .env
+
+      - name: Validate Compose file
+        run: docker compose config
+
+  build:
+    runs-on: ubuntu-latest
+    needs: lint
+    strategy:
+      fail-fast: false
+      matrix:
+        php-version: ["74", "80", "81", "82", "83", "84"]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copy environment file
+        run: cp .env.example .env
+
+      - name: Build workspace
+        run: docker compose build workspace
+
+      - name: Build PHP-FPM ${{ matrix.php-version }}
+        run: |
+          sed -i 's/PHP_VERSION=.*/PHP_VERSION=${{ matrix.php-version }}/' .env
+          docker compose build php-fpm
+
+      - name: Build supporting services
+        run: docker compose build redis nginx mariadb
