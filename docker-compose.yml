@@ -34,6 +34,7 @@ services:
     build:
       context: ./php-fpm
       args:
+        - PHP_VERSION=${PHP_VERSION}
         - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
         - INSTALL_CALENDAR=${PHP_FPM_INSTALL_CALENDAR}
         - INSTALL_EXIF=${PHP_FPM_INSTALL_EXIF}
