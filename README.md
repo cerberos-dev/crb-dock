@@ -42,6 +42,24 @@ MariaDB, Redis, and an optional management UI.
    docker compose ps
    ```
 
+## Configuration reference
+
+Key variables in `.env` (defaults shown are from `.env.example`):
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `APPLICATION` | `${HOME}/code/` | Host path to your code, mounted at `APPLICATION_LOCATION` (`/var/www`). |
+| `PHP_VERSION` | `8.4` | PHP-FPM version: `7.4`, `8.1`, `8.2`, `8.3`, `8.4`. |
+| `DATA_SAVE_PATH` | `./data` | Host path for persistent data (MariaDB, Redis). |
+| `DOCKER_HOST_IP` | `10.0.75.1` | Host IP injected as `dockerhost` in container `/etc/hosts`. |
+| `NGINX_HOST_HTTP_PORT` / `NGINX_HOST_HTTPS_PORT` | `80` / `443` | Host ports mapped to nginx. |
+| `REDIS_PORT` | `6379` | Host port mapped to Redis. |
+| `MARIADB_PORT` | `3306` | Host port mapped to MariaDB. |
+| `MARIADB_DATABASE` / `MARIADB_USER` / `MARIADB_PASSWORD` / `MARIADB_ROOT_PASSWORD` | `crb_dock` / `crb_dock` / … | DB credentials, applied only on first init. |
+| `WORKSPACE_TIMEZONE` | `UTC+01:00` | Timezone for workspace/MariaDB containers. |
+| `WORKSPACE_PUID` / `WORKSPACE_PGID` | `1000` | UID/GID inside the workspace — match your host user. |
+| `PORTAINER_WEB_PORT` / `PORTAINER_API_PORT` | `9000` / `8000` | Portainer UI/API ports (management profile). |
+
 ## Daily commands
 
 The included `Makefile` wraps the most common tasks:
@@ -49,7 +67,9 @@ The included `Makefile` wraps the most common tasks:
 ```bash
 make help        # show all commands
 make build       # build or rebuild all services
+make clean       # remove stopped containers, unused images and build cache
 make start       # start the stack
+make status      # show running containers and their health
 make stop        # stop the stack
 make restart     # restart all services
 make down        # stop and remove containers
@@ -128,7 +148,8 @@ docker compose exec -T mariadb mariadb -u root -p"$MARIADB_ROOT_PASSWORD" \
   "$MARIADB_DATABASE" < backup.sql
 ```
 
-Destroy and recreate the database volume:
+Destroy and recreate the database (deletes the MariaDB data directory at
+`${DATA_SAVE_PATH}/mariadb`, then restarts MariaDB to reinitialize it):
 
 ```bash
 make reset-db
