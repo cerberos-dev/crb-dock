@@ -38,10 +38,12 @@ clean: ## Remove stopped containers, unused images and build cache
 	docker system prune -f
 
 reset-db: ## DESTROY the MariaDB data directory and recreate it on next start
-	@echo "WARNING: This will delete all MariaDB data in ./data/mariadb"
-	@read -p "Are you sure? [y/N] " confirm && [ "$$confirm" = "y" ] || exit 1
-	docker compose stop mariadb
-	rm -rf ./data/mariadb
+	@set -a; [ -f ./.env ] && . ./.env; set +a; \
+	DATA_SAVE_PATH="$${DATA_SAVE_PATH:-./data}"; \
+	echo "WARNING: This will delete all MariaDB data in $${DATA_SAVE_PATH}/mariadb"; \
+	read -p "Are you sure? [y/N] " confirm && [ "$$confirm" = "y" ] || exit 1; \
+	docker compose stop mariadb; \
+	rm -rf "$${DATA_SAVE_PATH}/mariadb"; \
 	docker compose up -d mariadb
 
 management: ## Start the optional Portainer management UI
