@@ -2,11 +2,11 @@
 # Image Setup
 #
 # Unified Dockerfile for PHP 8.1, 8.2, 8.3 and 8.4.
-# Select the version with the build argument PHP_VERSION (default: 84).
-# For PHP 7.4 legacy support see Dockerfile-74.
+# Select the version with the build argument PHP_VERSION (default: 8.4).
+# For PHP 7.4 legacy support see Dockerfile-7.4.
 # --------------------------------------------------------------------------
 
-ARG PHP_VERSION=84
+ARG PHP_VERSION=8.4
 FROM php:${PHP_VERSION}-fpm
 
 LABEL maintainer="Cerberos <development@cerberos.dev>"
@@ -97,7 +97,7 @@ RUN if [ "${INSTALL_MEMCACHED}" = true ]; then \
 ARG INSTALL_IMAGICK=false
 RUN if [ "${INSTALL_IMAGICK}" = true ]; then \
     case "${PHP_VERSION}" in \
-        81|82|83) \
+        8.1|8.2|8.3) \
             apt-get update -yqq && \
             apt-get install -y --no-install-recommends libmagickwand-dev && \
             pecl install -o -f imagick && \
@@ -169,11 +169,11 @@ RUN if [ "${INSTALL_LDAP}" = true ]; then \
 ;fi
 
 # IonCube is only supported for PHP 8.1 in this unified build.
-# Use Dockerfile-74 if you need IonCube on PHP 7.4.
+# Use Dockerfile-7.4 if you need IonCube on PHP 7.4.
 ARG INSTALL_IONCUBE=false
 RUN if [ "${INSTALL_IONCUBE}" = true ]; then \
     case "${PHP_VERSION}" in \
-        81) \
+        8.1) \
             cd /tmp && \
             curl -Lo ioncube.tar.gz https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
             tar -xvzf ioncube.tar.gz && \

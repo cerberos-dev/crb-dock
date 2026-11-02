@@ -24,7 +24,7 @@ MariaDB, Redis, and an optional management UI.
 
 3. Review the important variables in `.env`:
    - `APPLICATION` — path to your project code on the host.
-   - `PHP_VERSION` — `74` (legacy WordPress), `81`, `82`, `83`, or `84`.
+   - `PHP_VERSION` — `7.4` (legacy WordPress), `8.1`, `8.2`, `8.3`, or `8.4`.
    - `MARIADB_*` — database name, user, and passwords (only used on first start).
 
 4. Build and start the stack:
@@ -105,7 +105,7 @@ It includes SANs for `crb-dock.localhost`, `crb-dock.local`, `crb-dock.crb`,
 ## PHP 7.4 legacy support
 
 PHP 7.4 is kept for older WordPress sites. It uses a dedicated legacy
-Dockerfile (`php-fpm/Dockerfile-74`) because it requires a different base
+Dockerfile (`php-fpm/Dockerfile-7.4`) because it requires a different base
 image, older system libraries, and extensions such as IonCube and mcrypt that
 are not supported on modern PHP versions.
 
