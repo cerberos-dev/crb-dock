@@ -7,6 +7,17 @@ FROM php:7.4-fpm
 LABEL maintainer="Cerberos <development@cerberos.dev>"
 
 # --------------------------------------------------------------------------
+# Debian bullseye reached end-of-life (Aug 2026): its packages moved to
+# archive.debian.org, so the default apt sources no longer resolve.
+# --------------------------------------------------------------------------
+
+RUN printf '%s\n' \
+        'deb http://archive.debian.org/debian bullseye main' \
+        'deb http://archive.debian.org/debian bullseye-updates main' \
+        'deb http://archive.debian.org/debian-security bullseye-security main' \
+        > /etc/apt/sources.list
+
+# --------------------------------------------------------------------------
 # Mandatory Software's Installation
 # --------------------------------------------------------------------------
 
@@ -26,7 +37,7 @@ RUN apt-get update -yqq && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 # Install the PHP mcrypt extention
-RUN pecl install mcrypt-1.0.7
+RUN pecl install mcrypt-1.0.7 && docker-php-ext-enable mcrypt
 
 # Install the PHP pdo_mysql extention
 RUN docker-php-ext-install pdo_mysql
