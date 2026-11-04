@@ -93,11 +93,11 @@ RUN if [ "${INSTALL_MEMCACHED}" = true ]; then \
     docker-php-ext-enable memcached \
 ;fi
 
-# Imagick (not available for PHP 8.4 yet)
+# Imagick (requires imagick 3.8+ for PHP 8.4)
 ARG INSTALL_IMAGICK=false
 RUN if [ "${INSTALL_IMAGICK}" = true ]; then \
     case "${PHP_VERSION}" in \
-        8.1|8.2|8.3) \
+        8.1|8.2|8.3|8.4) \
             apt-get update -yqq && \
             apt-get install -y --no-install-recommends libmagickwand-dev && \
             pecl install -o -f imagick && \
@@ -107,8 +107,7 @@ RUN if [ "${INSTALL_IMAGICK}" = true ]; then \
             rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
             ;; \
         *) \
-            echo "ERROR: Imagick is not supported for PHP ${PHP_VERSION}." >&2 && \
-            exit 1 \
+            echo "WARNING: Imagick is not supported for PHP ${PHP_VERSION}; skipping." >&2 \
             ;; \
     esac \
 ;fi
@@ -168,23 +167,22 @@ RUN if [ "${INSTALL_LDAP}" = true ]; then \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* \
 ;fi
 
-# IonCube is only supported for PHP 8.1 in this unified build.
+# IonCube loader (PHP 8.1-8.4).
 # Use Dockerfile-7.4 if you need IonCube on PHP 7.4.
 ARG INSTALL_IONCUBE=false
 RUN if [ "${INSTALL_IONCUBE}" = true ]; then \
     case "${PHP_VERSION}" in \
-        8.1) \
+        8.1|8.2|8.3|8.4) \
             cd /tmp && \
             curl -Lo ioncube.tar.gz https://downloads.ioncube.com/loader_downloads/ioncube_loaders_lin_x86-64.tar.gz && \
             tar -xvzf ioncube.tar.gz && \
-            mkdir -p /usr/local/lib/php/extensions/no-debug-non-zts-20210902 && \
-            mv ioncube/ioncube_loader_lin_8.1.so /usr/local/lib/php/extensions/no-debug-non-zts-20210902/ioncube_loader_lin_8.1.so && \
-            echo "zend_extension=/usr/local/lib/php/extensions/no-debug-non-zts-20210902/ioncube_loader_lin_8.1.so" > /usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_8.1.ini && \
+            mkdir -p "$(php-config --extension-dir)" && \
+            mv ioncube/ioncube_loader_lin_${PHP_VERSION}.so "$(php-config --extension-dir)/ioncube_loader_lin_${PHP_VERSION}.so" && \
+            echo "zend_extension=$(php-config --extension-dir)/ioncube_loader_lin_${PHP_VERSION}.so" > "/usr/local/etc/php/conf.d/00_docker-php-ext-ioncube_loader_lin_${PHP_VERSION}.ini" && \
             rm -Rf ioncube.tar.gz ioncube \
             ;; \
         *) \
-            echo "ERROR: IonCube is only supported for PHP 8.1 in the unified build." >&2 && \
-            exit 1 \
+            echo "WARNING: IonCube is not supported for PHP ${PHP_VERSION}; skipping." >&2 \
             ;; \
     esac \
 ;fi

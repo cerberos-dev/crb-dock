@@ -126,8 +126,8 @@ It includes SANs for `crb-dock.localhost`, `crb-dock.local`, `crb-dock.crb`,
 
 PHP 7.4 is kept for older WordPress sites. It uses a dedicated legacy
 Dockerfile (`php-fpm/Dockerfile-7.4`) because it requires a different base
-image, older system libraries, and extensions such as IonCube and mcrypt that
-are not supported on modern PHP versions.
+image, older system libraries, and the mcrypt extension that is not supported
+on modern PHP versions.
 
 > PHP 7.4 reached end-of-life in November 2022. Only use it for maintenance
 > of existing projects and avoid it for new work.

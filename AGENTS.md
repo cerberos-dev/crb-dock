@@ -26,7 +26,7 @@ add/remove the symlink **and** the matching `phpX.Y.ini`, plus update the CI mat
 (`.github/workflows/ci.yml`) and the version lists in `.env.example` / `README.md`.
 
 ## Per-version quirks (`php-fpm/Dockerfile`)
-- IonCube only supported on 7.4 (legacy file) and 8.1; Swoole not on 7.4; Imagick not on 8.4.
+- IonCube supported on 7.4 (legacy file) and 8.1-8.4; Imagick on 8.1-8.4; Swoole not on 7.4.
 - `Dockerfile-7.4` overrides apt sources to `archive.debian.org` (bullseye EOL) — keep this.
 
 ## Service gotchas
